@@ -31,6 +31,8 @@ public class SongLoader {
             AudioColumns.ALBUM,// 8
             AudioColumns.ARTIST_ID,// 9
             AudioColumns.ARTIST,// 10
+            //Album artist is hidden for whatever stupid typical Android reason so we have to fetch it via reflection
+            "ALBUM_ARTIST",// 11 
     };
 
     @NonNull
@@ -92,8 +94,9 @@ public class SongLoader {
         final String albumName = cursor.getString(8);
         final int artistId = cursor.getInt(9);
         final String artistName = cursor.getString(10);
+        final String albumArtist = cursor.getString(11);
 
-        return new Song(id, title, trackNumber, year, duration, data, dateModified, albumId, albumName, artistId, artistName);
+        return new Song(id, title, trackNumber, year, duration, data, dateModified, albumId, albumName, albumArtist, artistId, artistName);
     }
 
     @Nullable
