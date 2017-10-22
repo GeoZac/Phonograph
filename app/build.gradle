@@ -30,7 +30,7 @@ def gitBranch() {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.0'
     dataBinding {
         enabled = true
     }
