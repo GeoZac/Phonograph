@@ -29,6 +29,7 @@ def gitBranch() {
 }
 
 android {
+    archivesBaseName = "phonograph"
     compileSdkVersion 26
     buildToolsVersion '26.0.0'
     dataBinding {
