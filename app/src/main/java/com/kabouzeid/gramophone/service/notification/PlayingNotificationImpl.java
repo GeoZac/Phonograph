@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
@@ -117,6 +120,7 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 if (!PreferenceUtil.getInstance(service).coloredNotification()) {
                                     bgColor = Color.WHITE;
                                 }
+                                setGradientColor(bgColor);
                                 setBackgroundColor(bgColor);
                                 setNotificationContent(ColorUtil.isColorLight(bgColor));
 
@@ -129,7 +133,16 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayout.setInt(R.id.root, "setBackgroundColor", color);
                                 notificationLayoutBig.setInt(R.id.root, "setBackgroundColor", color);
                             }
-
+                            private void setGradientColor(int color) {
+                                LinearGradient gd = new LinearGradient(128,64,0,64,color,Color.TRANSPARENT ,Shader.TileMode.CLAMP);
+                                Paint p = new Paint();
+                                p.setDither(true);
+                                p.setShader(gd);
+                                Bitmap bmp = Bitmap.createBitmap(128,128, Bitmap.Config.ARGB_8888);
+                                Canvas canvas = new Canvas(bmp);
+                                canvas.drawRect(new RectF(0,0,128,128),p);
+                                notificationLayoutBig.setImageViewBitmap(R.id.color_layer,bmp);
+                            }
                             private void setNotificationContent(boolean dark) {
                                 int primary = MaterialValueHelper.getPrimaryTextColor(service, dark);
                                 int secondary = MaterialValueHelper.getSecondaryTextColor(service, dark);
