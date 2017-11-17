@@ -134,7 +134,7 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayoutBig.setInt(R.id.root, "setBackgroundColor", color);
                             }
                             private void setGradientColor(int color) {
-                                LinearGradient gd = new LinearGradient(128,64,0,64,color,Color.TRANSPARENT ,Shader.TileMode.CLAMP);
+                                LinearGradient gd = new LinearGradient(0,64,128,64,color,Color.TRANSPARENT ,Shader.TileMode.CLAMP);
                                 Paint p = new Paint();
                                 p.setDither(true);
                                 p.setShader(gd);
@@ -147,10 +147,10 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 int primary = MaterialValueHelper.getPrimaryTextColor(service, dark);
                                 int secondary = MaterialValueHelper.getSecondaryTextColor(service, dark);
 
-                                Bitmap close = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_close_white_24dp,primary),1.0f);
-                                Bitmap prev = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_previous_white_24dp, primary), 1.5f);
-                                Bitmap next = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_next_white_24dp, primary), 1.5f);
-                                Bitmap playPause = createBitmap(Util.getTintedVectorDrawable(service, isPlaying ? R.drawable.ic_pause_white_24dp : R.drawable.ic_play_arrow_white_24dp, primary), 1.5f);
+                                Bitmap icon = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_notification,primary),1.0f);
+                                Bitmap prev = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_previous_white_24dp, primary), 1.0f);
+                                Bitmap next = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_next_white_24dp, primary), 1.0f);
+                                Bitmap playPause = createBitmap(Util.getTintedVectorDrawable(service, isPlaying ? R.drawable.ic_pause_white_24dp : R.drawable.ic_play_arrow_white_24dp, primary), 1.0f);
 
                                 notificationLayout.setTextColor(R.id.title, primary);
                                 notificationLayout.setTextColor(R.id.text, secondary);
@@ -161,10 +161,11 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayoutBig.setTextColor(R.id.title, primary);
                                 notificationLayoutBig.setTextColor(R.id.text, secondary);
                                 notificationLayoutBig.setTextColor(R.id.text2, secondary);
-                                notificationLayoutBig.setImageViewBitmap(R.id.action_quit, close);
+                                notificationLayoutBig.setTextColor(R.id.separator, secondary);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_prev, prev);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_next, next);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_play_pause, playPause);
+                                notificationLayoutBig.setImageViewBitmap(R.id.icon, icon);
                             }
                         });
             }
@@ -176,9 +177,6 @@ public class PlayingNotificationImpl extends PlayingNotification {
 
         final ComponentName serviceName = new ComponentName(service, MusicService.class);
 
-        // Stop and dismiss notification
-        pendingIntent = buildPendingIntent(service,MusicService.ACTION_STOP, serviceName);
-        notificationLayoutBig.setOnClickPendingIntent(R.id.action_quit, pendingIntent);
 
         // Previous track
         pendingIntent = buildPendingIntent(service, MusicService.ACTION_REWIND, serviceName);
