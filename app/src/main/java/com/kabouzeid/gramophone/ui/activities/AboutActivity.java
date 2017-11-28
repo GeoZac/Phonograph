@@ -20,7 +20,6 @@ import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.dialogs.ChangelogDialog;
 import com.kabouzeid.gramophone.dialogs.DonationsDialog;
 import com.kabouzeid.gramophone.ui.activities.base.AbsBaseActivity;
-import com.kabouzeid.gramophone.ui.activities.bugreport.BugReportActivity;
 import com.kabouzeid.gramophone.ui.activities.intro.AppIntroActivity;
 
 import butterknife.BindView;
@@ -76,8 +75,6 @@ public class AboutActivity extends AbsBaseActivity implements View.OnClickListen
     LinearLayout forkOnGitHub;
     @BindView(R.id.visit_website)
     LinearLayout visitWebsite;
-    @BindView(R.id.report_bugs)
-    LinearLayout reportBugs;
     @BindView(R.id.join_google_plus_community)
     LinearLayout joinGooglePlusCommunity;
     @BindView(R.id.translate)
@@ -142,7 +139,6 @@ public class AboutActivity extends AbsBaseActivity implements View.OnClickListen
         followOnTwitter.setOnClickListener(this);
         forkOnGitHub.setOnClickListener(this);
         visitWebsite.setOnClickListener(this);
-        reportBugs.setOnClickListener(this);
         writeAnEmail.setOnClickListener(this);
         joinGooglePlusCommunity.setOnClickListener(this);
         translate.setOnClickListener(this);
@@ -192,8 +188,6 @@ public class AboutActivity extends AbsBaseActivity implements View.OnClickListen
             openUrl(GITHUB);
         } else if (v == visitWebsite) {
             openUrl(WEBSITE);
-        } else if (v == reportBugs) {
-            startActivity(new Intent(this, BugReportActivity.class));
         } else if (v == writeAnEmail) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:contact@kabouzeid.com"));

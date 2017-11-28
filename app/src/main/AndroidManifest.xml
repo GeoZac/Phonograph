@@ -113,9 +113,6 @@
             android:label="@string/intro_label"
             android:theme="@style/Theme.Intro" />
         <activity
-            android:name=".ui.activities.bugreport.BugReportActivity"
-            android:label="@string/report_an_issue" />
-        <activity
             android:name=".appshortcuts.AppShortcutLauncherActivity"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -136,9 +133,6 @@
         <meta-data
             android:name="com.lge.support.SPLIT_WINDOW"
             android:value="true" />
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="b23725bd3d266aa65c5a3dd1816b2f801524a189" />
         <meta-data
             android:name="com.kabouzeid.gramophone.glide.PhonographGlideModule"
             android:value="GlideModule" />
