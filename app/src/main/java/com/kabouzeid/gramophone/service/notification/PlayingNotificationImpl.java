@@ -134,23 +134,23 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayoutBig.setInt(R.id.root, "setBackgroundColor", color);
                             }
                             private void setGradientColor(int color) {
-                                LinearGradient gd = new LinearGradient(0,64,128,64,color,Color.TRANSPARENT ,Shader.TileMode.CLAMP);
-                                Paint p = new Paint();
-                                p.setDither(true);
-                                p.setShader(gd);
-                                Bitmap bmp = Bitmap.createBitmap(128,128, Bitmap.Config.ARGB_8888);
-                                Canvas canvas = new Canvas(bmp);
-                                canvas.drawRect(new RectF(0,0,128,128),p);
-                                notificationLayoutBig.setImageViewBitmap(R.id.color_layer,bmp);
+                                LinearGradient gradient = new LinearGradient(0, 64, 128, 64, color, Color.TRANSPARENT, Shader.TileMode.CLAMP);
+                                Paint paint = new Paint();
+                                paint.setDither(true);
+                                paint.setShader(gradient);
+                                Bitmap bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
+                                Canvas canvas = new Canvas(bitmap);
+                                canvas.drawRect(new RectF(0, 0, 128, 128), paint);
+                                notificationLayoutBig.setImageViewBitmap(R.id.color_layer, bitmap);
                             }
                             private void setNotificationContent(boolean dark) {
                                 int primary = MaterialValueHelper.getPrimaryTextColor(service, dark);
                                 int secondary = MaterialValueHelper.getSecondaryTextColor(service, dark);
 
                                 Bitmap icon = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_notification,primary),1.0f);
-                                Bitmap prev = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_previous_white_24dp, primary), 1.0f);
-                                Bitmap next = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_next_white_24dp, primary), 1.0f);
-                                Bitmap playPause = createBitmap(Util.getTintedVectorDrawable(service, isPlaying ? R.drawable.ic_pause_white_24dp : R.drawable.ic_play_arrow_white_24dp, primary), 1.0f);
+                                Bitmap prev = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_previous_white_24dp, primary), 1.5f);
+                                Bitmap next = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_next_white_24dp, primary), 1.5f);
+                                Bitmap playPause = createBitmap(Util.getTintedVectorDrawable(service, isPlaying ? R.drawable.ic_pause_white_24dp : R.drawable.ic_play_arrow_white_24dp, primary), 1.5f);
 
                                 notificationLayout.setTextColor(R.id.title, primary);
                                 notificationLayout.setTextColor(R.id.text, secondary);
