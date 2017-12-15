@@ -27,7 +27,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
-import com.jetradarmobile.snowfall.SnowfallView;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.kabouzeid.gramophone.R;
@@ -54,7 +53,6 @@ import com.kabouzeid.gramophone.ui.activities.tageditor.AbsTagEditorActivity;
 import com.kabouzeid.gramophone.ui.activities.tageditor.AlbumTagEditorActivity;
 import com.kabouzeid.gramophone.util.NavigationUtil;
 import com.kabouzeid.gramophone.util.PhonographColorUtil;
-import com.kabouzeid.gramophone.util.PreferenceUtil;
 import com.kabouzeid.gramophone.util.Util;
 
 import java.util.Locale;
@@ -120,14 +118,6 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
         setUpViews();
 
         getSupportLoaderManager().initLoader(LOADER_ID, getIntent().getExtras(), this);
-
-        checkEnableSnowfall();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkEnableSnowfall();
     }
 
     @Override
@@ -471,16 +461,6 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
         @Override
         public Album loadInBackground() {
             return AlbumLoader.getAlbum(getContext(), albumId);
-        }
-    }
-
-    private void checkEnableSnowfall() {
-        SnowfallView snowfallView = findViewById(R.id.snowfall);
-        if (!PreferenceUtil.getInstance(this).getEnableSnowfall()) {
-            snowfallView.setVisibility(View.GONE);
-        } else {
-            snowfallView.setVisibility(View.VISIBLE);
-            snowfallView.bringToFront();
         }
     }
 }

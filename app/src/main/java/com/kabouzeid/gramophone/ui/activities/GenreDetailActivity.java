@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialcab.MaterialCab;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import com.jetradarmobile.snowfall.SnowfallView;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.adapter.song.SongAdapter;
@@ -28,7 +27,6 @@ import com.kabouzeid.gramophone.model.Genre;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.ui.activities.base.AbsSlidingMusicPanelActivity;
 import com.kabouzeid.gramophone.util.PhonographColorUtil;
-import com.kabouzeid.gramophone.util.PreferenceUtil;
 import com.kabouzeid.gramophone.util.ViewUtil;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -75,8 +73,6 @@ public class GenreDetailActivity extends AbsSlidingMusicPanelActivity implements
         setUpToolBar();
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-
-        checkEnableSnowfall();
     }
 
     @Override
@@ -178,12 +174,6 @@ public class GenreDetailActivity extends AbsSlidingMusicPanelActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        checkEnableSnowfall();
-    }
-
-    @Override
     public Loader<ArrayList<Song>> onCreateLoader(int id, Bundle args) {
         return new GenreDetailActivity.AsyncGenreSongLoader(this, genre);
     }
@@ -211,16 +201,6 @@ public class GenreDetailActivity extends AbsSlidingMusicPanelActivity implements
         @Override
         public ArrayList<Song> loadInBackground() {
             return GenreLoader.getSongs(getContext(), genre.id);
-        }
-    }
-
-    private void checkEnableSnowfall() {
-        SnowfallView snowfallView = findViewById(R.id.snowfall);
-        if (!PreferenceUtil.getInstance(this).getEnableSnowfall()) {
-            snowfallView.setVisibility(View.GONE);
-        } else {
-            snowfallView.setVisibility(View.VISIBLE);
-            snowfallView.bringToFront();
         }
     }
 }
