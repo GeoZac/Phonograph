@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
@@ -117,6 +120,7 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 if (!PreferenceUtil.getInstance(service).coloredNotification()) {
                                     bgColor = Color.WHITE;
                                 }
+                                setGradientColor(bgColor);
                                 setBackgroundColor(bgColor);
                                 setNotificationContent(ColorUtil.isColorLight(bgColor));
 
@@ -129,11 +133,21 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayout.setInt(R.id.root, "setBackgroundColor", color);
                                 notificationLayoutBig.setInt(R.id.root, "setBackgroundColor", color);
                             }
-
+                            private void setGradientColor(int color) {
+                                LinearGradient gradient = new LinearGradient(0, 64, 128, 64, color, Color.TRANSPARENT, Shader.TileMode.CLAMP);
+                                Paint paint = new Paint();
+                                paint.setDither(true);
+                                paint.setShader(gradient);
+                                Bitmap bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
+                                Canvas canvas = new Canvas(bitmap);
+                                canvas.drawRect(new RectF(0, 0, 128, 128), paint);
+                                notificationLayoutBig.setImageViewBitmap(R.id.color_layer, bitmap);
+                            }
                             private void setNotificationContent(boolean dark) {
                                 int primary = MaterialValueHelper.getPrimaryTextColor(service, dark);
                                 int secondary = MaterialValueHelper.getSecondaryTextColor(service, dark);
 
+                                Bitmap icon = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_notification,primary),1.0f);
                                 Bitmap prev = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_previous_white_24dp, primary), 1.5f);
                                 Bitmap next = createBitmap(Util.getTintedVectorDrawable(service, R.drawable.ic_skip_next_white_24dp, primary), 1.5f);
                                 Bitmap playPause = createBitmap(Util.getTintedVectorDrawable(service, isPlaying ? R.drawable.ic_pause_white_24dp : R.drawable.ic_play_arrow_white_24dp, primary), 1.5f);
@@ -147,9 +161,11 @@ public class PlayingNotificationImpl extends PlayingNotification {
                                 notificationLayoutBig.setTextColor(R.id.title, primary);
                                 notificationLayoutBig.setTextColor(R.id.text, secondary);
                                 notificationLayoutBig.setTextColor(R.id.text2, secondary);
+                                notificationLayoutBig.setTextColor(R.id.separator, secondary);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_prev, prev);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_next, next);
                                 notificationLayoutBig.setImageViewBitmap(R.id.action_play_pause, playPause);
+                                notificationLayoutBig.setImageViewBitmap(R.id.icon, icon);
                             }
                         });
             }
@@ -160,6 +176,7 @@ public class PlayingNotificationImpl extends PlayingNotification {
         PendingIntent pendingIntent;
 
         final ComponentName serviceName = new ComponentName(service, MusicService.class);
+
 
         // Previous track
         pendingIntent = buildPendingIntent(service, MusicService.ACTION_REWIND, serviceName);
