@@ -25,8 +25,8 @@ public class AppIntroActivity extends IntroActivity {
                 .title(R.string.app_name)
                 .description(R.string.welcome_to_phonograph)
                 .image(R.drawable.icon_web)
-                .background(R.color.md_blue_grey_100)
-                .backgroundDark(R.color.md_blue_grey_200)
+                .background(R.color.md_grey_900)
+                .backgroundDark(R.color.md_grey_900)
                 .layout(R.layout.fragment_simple_slide_large_image)
                 .build());
         addSlide(new SimpleSlide.Builder()
