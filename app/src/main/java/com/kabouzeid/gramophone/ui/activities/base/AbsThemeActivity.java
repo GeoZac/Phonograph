@@ -23,15 +23,6 @@ public abstract class AbsThemeActivity extends ATHToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // default theme
-        if (!ThemeStore.isConfigured(this, 1)) {
-            ThemeStore.editTheme(this)
-                    .activityTheme(R.style.Theme_Phonograph)
-                    .primaryColorRes(R.color.dark_primary)
-                    .accentColorRes(R.color.md_white_1000)
-                    .commit();
-        }
-        getSharedPreferences("[[kabouzeid_app-theme-helper]]", 0).edit().putInt("activity_theme", PreferenceUtil.getInstance(this).getGeneralTheme()).commit(); // TEMPORARY FIX
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }

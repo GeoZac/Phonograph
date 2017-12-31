@@ -7,16 +7,22 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.helper.SortOrder;
+import com.kabouzeid.gramophone.model.CategoryInfo;
 import com.kabouzeid.gramophone.ui.fragments.mainactivity.folders.FoldersFragment;
 import com.kabouzeid.gramophone.ui.fragments.player.NowPlayingScreen;
 
 import java.io.File;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public final class PreferenceUtil {
     public static final String GENERAL_THEME = "general_theme";
-    public static final String DEFAULT_START_PAGE = "default_start_page";
+    public static final String REMEMBER_LAST_TAB = "remember_last_tab";
     public static final String LAST_PAGE = "last_start_page";
     public static final String LAST_MUSIC_CHOOSER = "last_music_chooser";
     public static final String NOW_PLAYING_SCREEN_ID = "now_playing_screen_id";
@@ -74,6 +80,8 @@ public final class PreferenceUtil {
 
     public static final String INITIALIZED_BLACKLIST = "initialized_blacklist";
 
+    public static final String LIBRARY_CATEGORIES = "library_categories";
+
     private static PreferenceUtil sInstance;
 
     private final SharedPreferences mPreferences;
@@ -114,8 +122,8 @@ public final class PreferenceUtil {
         }
     }
 
-    public final int getDefaultStartPage() {
-        return Integer.parseInt(mPreferences.getString(DEFAULT_START_PAGE, "-1"));
+    public final boolean rememberLastTab() {
+        return mPreferences.getBoolean(REMEMBER_LAST_TAB, true);
     }
 
     public void setLastPage(final int value) {
@@ -425,5 +433,42 @@ public final class PreferenceUtil {
 
     public final boolean initializedBlacklist() {
         return mPreferences.getBoolean(INITIALIZED_BLACKLIST, false);
+    }
+
+    public void setLibraryCategoryInfos(ArrayList<CategoryInfo> categories) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<CategoryInfo>>() {
+        }.getType();
+
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(LIBRARY_CATEGORIES, gson.toJson(categories, collectionType));
+        editor.apply();
+    }
+
+    public ArrayList<CategoryInfo> getLibraryCategoryInfos() {
+        String data = mPreferences.getString(LIBRARY_CATEGORIES, null);
+        if (data != null) {
+            Gson gson = new Gson();
+            Type collectionType = new TypeToken<ArrayList<CategoryInfo>>() {
+            }.getType();
+
+            try {
+                return gson.fromJson(data, collectionType);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return getDefaultLibraryCategoryInfos();
+    }
+
+    public ArrayList<CategoryInfo> getDefaultLibraryCategoryInfos() {
+        ArrayList<CategoryInfo> defaultCategoryInfos = new ArrayList<>(5);
+        defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.SONGS, true));
+        defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.ALBUMS, true));
+        defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.ARTISTS, true));
+        defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.GENRES, true));
+        defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.PLAYLISTS, true));
+        return defaultCategoryInfos;
     }
 }
