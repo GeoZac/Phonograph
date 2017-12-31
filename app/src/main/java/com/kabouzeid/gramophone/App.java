@@ -32,21 +32,12 @@ public class App extends Application {
         // default theme
         if (!ThemeStore.isConfigured(this, 1)) {
             ThemeStore.editTheme(this)
-                    .activityTheme(R.style.Theme_Phonograph_Light)
-                    .primaryColorRes(R.color.md_indigo_500)
+                    .activityTheme(R.style.Theme_Phonograph)
+                    .primaryColorRes(R.color.dark_primary)
                     .accentColorRes(R.color.md_pink_A400)
                     .commit();
         }
 
-        // Set up Crashlytics, disabled for debug builds
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, crashlyticsKit, new Answers());
-        } else {
-            Fabric.with(this, crashlyticsKit); // crashlytics kit is disabled here
-        }
 
         // Set up dynamic shortcuts
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {

@@ -3,7 +3,7 @@
     <com.kabouzeid.appthemehelper.common.prefs.supportv7.ATEPreferenceCategory android:title="@string/pref_header_colors">
 
         <com.kabouzeid.appthemehelper.common.prefs.supportv7.ATEListPreference
-            android:defaultValue="light"
+            android:defaultValue="dark"
             android:entries="@array/pref_general_theme_list_titles"
             android:entryValues="@array/pref_general_theme_list_values"
             android:key="general_theme"
