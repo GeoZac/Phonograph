@@ -55,7 +55,7 @@
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="top"
         app:mpb_progressStyle="horizontal"
         app:mpb_useIntrinsicPadding="false" />
 
