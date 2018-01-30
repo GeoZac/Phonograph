@@ -1,12 +1,17 @@
 package com.kabouzeid.gramophone.ui.fragments.player;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.kabouzeid.appthemehelper.util.ToolbarContentTintHelper;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.dialogs.AddToPlaylistDialog;
 import com.kabouzeid.gramophone.dialogs.CreatePlaylistDialog;
@@ -21,12 +26,14 @@ import com.kabouzeid.gramophone.ui.activities.tageditor.SongTagEditorActivity;
 import com.kabouzeid.gramophone.ui.fragments.AbsMusicServiceFragment;
 import com.kabouzeid.gramophone.util.MusicUtil;
 import com.kabouzeid.gramophone.util.NavigationUtil;
+import com.kabouzeid.gramophone.util.Util;
 
 public abstract class AbsPlayerFragment extends AbsMusicServiceFragment implements Toolbar.OnMenuItemClickListener, PaletteColorHolder {
     public static final String TAG = AbsPlayerFragment.class.getSimpleName();
 
     private Callbacks callbacks;
     private static boolean isToolbarShown = true;
+    private AsyncTask updateIsFavoriteTask;
 
     @Override
     public void onAttach(Context context) {
@@ -148,5 +155,34 @@ public abstract class AbsPlayerFragment extends AbsMusicServiceFragment implemen
 
     public interface Callbacks {
         void onPaletteColorChanged();
+    }
+
+    protected void updateIsFavorite(Toolbar toolbar) {
+        if (updateIsFavoriteTask != null) updateIsFavoriteTask.cancel(false);
+        updateIsFavoriteTask = new AsyncTask<Song, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Song... params) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    return MusicUtil.isFavorite(getActivity(), params[0]);
+                } else {
+                    cancel(false);
+                    return null;
+                }
+            }
+
+
+            protected void onPostExecute(Boolean isFavorite) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    int res = isFavorite ? R.drawable.ic_favorite_white_24dp : R.drawable.ic_favorite_border_white_24dp;
+                    int color = ToolbarContentTintHelper.toolbarContentColor(activity, Color.TRANSPARENT);
+                    Drawable drawable = Util.getTintedVectorDrawable(activity, res, color);
+                    toolbar.getMenu().findItem(R.id.action_toggle_favorite)
+                            .setIcon(drawable)
+                            .setTitle(isFavorite ? getString(R.string.action_remove_from_favorites) : getString(R.string.action_add_to_favorites));
+                }
+            }
+        }.execute(MusicPlayerRemote.getCurrentSong());
     }
 }

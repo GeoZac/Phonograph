@@ -181,14 +181,14 @@ public class CardPlayerFragment extends AbsPlayerFragment implements PlayerAlbum
     public void onServiceConnected() {
         updateQueue();
         updateCurrentSong();
-        updateIsFavorite();
+        updateIsFavorite(toolbar);
         updateLyrics();
     }
 
     @Override
     public void onPlayingMetaChanged() {
         updateCurrentSong();
-        updateIsFavorite();
+        updateIsFavorite(toolbar);
         updateQueuePosition();
         updateLyrics();
     }
@@ -273,35 +273,6 @@ public class CardPlayerFragment extends AbsPlayerFragment implements PlayerAlbum
         layoutManager.scrollToPositionWithOffset(MusicPlayerRemote.getPosition() + 1, 0);
     }
 
-    private void updateIsFavorite() {
-        if (updateIsFavoriteTask != null) updateIsFavoriteTask.cancel(false);
-        updateIsFavoriteTask = new AsyncTask<Song, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Song... params) {
-                Activity activity = getActivity();
-                if (activity != null) {
-                    return MusicUtil.isFavorite(getActivity(), params[0]);
-                } else {
-                    cancel(false);
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Boolean isFavorite) {
-                Activity activity = getActivity();
-                if (activity != null) {
-                    int res = isFavorite ? R.drawable.ic_favorite_white_24dp : R.drawable.ic_favorite_border_white_24dp;
-                    int color = ToolbarContentTintHelper.toolbarContentColor(activity, Color.TRANSPARENT);
-                    Drawable drawable = Util.getTintedVectorDrawable(activity, res, color);
-                    toolbar.getMenu().findItem(R.id.action_toggle_favorite)
-                            .setIcon(drawable)
-                            .setTitle(isFavorite ? getString(R.string.action_remove_from_favorites) : getString(R.string.action_add_to_favorites));
-                }
-            }
-        }.execute(MusicPlayerRemote.getCurrentSong());
-    }
-
     private void updateLyrics() {
         if (updateLyricsAsyncTask != null) updateLyricsAsyncTask.cancel(false);
         final Song song = MusicPlayerRemote.getCurrentSong();
@@ -370,7 +341,7 @@ public class CardPlayerFragment extends AbsPlayerFragment implements PlayerAlbum
             if (MusicUtil.isFavorite(getActivity(), song)) {
                 playerAlbumCoverFragment.showHeartAnimation();
             }
-            updateIsFavorite();
+            updateIsFavorite(toolbar);
         }
     }
 
