@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -62,7 +61,7 @@ public class DonationsDialog extends DialogFragment implements BillingProcessor.
 
         @SuppressLint("InflateParams")
         View customView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_donation, null);
-        ProgressBar progressBar = ButterKnife.findById(customView, R.id.progress);
+        ProgressBar progressBar = customView.findViewById(R.id.progress);
         MDTintHelper.setTint(progressBar, ThemeSingleton.get().positiveColor.getDefaultColor());
 
         return new MaterialDialog.Builder(getContext())
@@ -166,7 +165,7 @@ public class DonationsDialog extends DialogFragment implements BillingProcessor.
             View customView = ((MaterialDialog) dialog.getDialog()).getCustomView();
             //noinspection ConstantConditions
             customView.findViewById(R.id.progress_container).setVisibility(View.GONE);
-            ListView listView = ButterKnife.findById(customView, R.id.list);
+            ListView listView = customView.findViewById(R.id.list);
             listView.setAdapter(new SkuDetailsAdapter(dialog, skuDetails));
             listView.setVisibility(View.VISIBLE);
         }

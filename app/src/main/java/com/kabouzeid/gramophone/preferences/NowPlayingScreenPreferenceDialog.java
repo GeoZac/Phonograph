@@ -23,8 +23,6 @@ import com.kabouzeid.gramophone.ui.fragments.player.NowPlayingScreen;
 import com.kabouzeid.gramophone.util.PreferenceUtil;
 import com.kabouzeid.gramophone.util.ViewUtil;
 
-import butterknife.ButterKnife;
-
 /**
  * @author Karim Abou Zeid (kabouzeid)
  */
@@ -42,13 +40,13 @@ public class NowPlayingScreenPreferenceDialog extends DialogFragment implements 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(getContext()).inflate(R.layout.preference_dialog_now_playing_screen, null);
-        ViewPager viewPager = ButterKnife.findById(view, R.id.now_playing_screen_view_pager);
+        ViewPager viewPager = view.findViewById(R.id.now_playing_screen_view_pager);
         viewPager.setAdapter(new NowPlayingScreenAdapter(getContext()));
         viewPager.addOnPageChangeListener(this);
         viewPager.setPageMargin((int) ViewUtil.convertDpToPixel(32, getResources()));
         viewPager.setCurrentItem(PreferenceUtil.getInstance(getContext()).getNowPlayingScreen().ordinal());
 
-        InkPageIndicator pageIndicator = ButterKnife.findById(view, R.id.page_indicator);
+        InkPageIndicator pageIndicator = view.findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(viewPager);
         pageIndicator.onPageSelected(viewPager.getCurrentItem());
 
@@ -105,8 +103,8 @@ public class NowPlayingScreenPreferenceDialog extends DialogFragment implements 
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.preference_now_playing_screen_item, collection, false);
             collection.addView(layout);
 
-            ImageView image = ButterKnife.findById(layout, R.id.image);
-            TextView title = ButterKnife.findById(layout, R.id.title);
+            ImageView image = layout.findViewById(R.id.image);
+            TextView title = layout.findViewById(R.id.title);
             image.setImageResource(nowPlayingScreen.drawableResId);
             title.setText(nowPlayingScreen.titleRes);
 

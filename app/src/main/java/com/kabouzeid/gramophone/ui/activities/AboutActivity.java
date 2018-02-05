@@ -169,7 +169,7 @@ public class AboutActivity extends AbsBaseActivity implements View.OnClickListen
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return "Unkown";
+        return "Unknown";
     }
 
     @Override
