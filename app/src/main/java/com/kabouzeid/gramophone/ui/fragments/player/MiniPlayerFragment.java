@@ -38,6 +38,8 @@ public class MiniPlayerFragment extends AbsMusicServiceFragment implements Music
     TextView miniPlayerTitle;
     @BindView(R.id.mini_player_play_pause_button)
     ImageView miniPlayerPlayPauseButton;
+    @BindView(R.id.mini_player_skip_button)
+    ImageView miniPlayerSkipButton;
     @BindView(R.id.progress_bar)
     MaterialProgressBar progressBar;
 
@@ -74,6 +76,7 @@ public class MiniPlayerFragment extends AbsMusicServiceFragment implements Music
 
     private void setUpMiniPlayer() {
         setUpPlayPauseButton();
+        setUpSkipButton();
         progressBar.setProgressTintList(ColorStateList.valueOf(ThemeStore.accentColor(getActivity())));
     }
 
@@ -82,6 +85,12 @@ public class MiniPlayerFragment extends AbsMusicServiceFragment implements Music
         miniPlayerPlayPauseButton.setImageDrawable(miniPlayerPlayPauseDrawable);
         miniPlayerPlayPauseButton.setColorFilter(ATHUtil.resolveColor(getActivity(), R.attr.iconColor, ThemeStore.textColorSecondary(getActivity())), PorterDuff.Mode.SRC_IN);
         miniPlayerPlayPauseButton.setOnClickListener(new PlayPauseButtonOnClickHandler());
+    }
+
+    private void setUpSkipButton() {
+        miniPlayerSkipButton.setImageResource(R.drawable.ic_skip_next_white_24dp);
+        miniPlayerSkipButton.setColorFilter(ATHUtil.resolveColor(getActivity(), R.attr.iconColor, ThemeStore.textColorSecondary(getActivity())), PorterDuff.Mode.SRC_IN);
+        miniPlayerSkipButton.setOnClickListener(v -> MusicPlayerRemote.playNextSong());
     }
 
     private void updateSongTitle() {
