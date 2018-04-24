@@ -12,6 +12,7 @@ import com.kabouzeid.appthemehelper.common.ATHToolbarActivity;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.kabouzeid.gramophone.R;
+import com.kabouzeid.gramophone.util.PreferenceUtil;
 import com.kabouzeid.gramophone.util.Util;
 
 /**
@@ -22,6 +23,7 @@ public abstract class AbsThemeActivity extends ATHToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferenceUtil.getInstance(this).getGeneralTheme());
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }

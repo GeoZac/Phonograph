@@ -8,6 +8,7 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.gramophone.appshortcuts.DynamicShortcutManager;
 
+
 /**
  * @author Karim Abou Zeid (kabouzeid)
  */
@@ -29,12 +30,10 @@ public class App extends Application {
         // default theme
         if (!ThemeStore.isConfigured(this, 1)) {
             ThemeStore.editTheme(this)
-                    .activityTheme(R.style.Theme_Phonograph)
                     .primaryColorRes(R.color.dark_primary)
                     .accentColorRes(R.color.md_pink_A400)
                     .commit();
         }
-
 
         // Set up dynamic shortcuts
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
