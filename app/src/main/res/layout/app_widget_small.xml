@@ -2,7 +2,7 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/card"
     android:columnCount="2"
     android:gravity="top"
@@ -11,10 +11,11 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="@dimen/app_widget_small_image_size"
-        android:layout_height="@dimen/app_widget_small_image_size"
+        android:layout_height="match_parent"
         android:scaleType="centerInside"
         tools:ignore="ContentDescription"
         tools:src="@drawable/default_album_art" />
+
 
     <LinearLayout
         android:id="@+id/media_actions"
