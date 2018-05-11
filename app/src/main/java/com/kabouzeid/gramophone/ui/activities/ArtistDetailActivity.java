@@ -75,6 +75,8 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
     ObservableListView songListView;
     @BindView(R.id.image)
     ImageView artistImage;
+    @BindView(R.id.expanded_image)
+    ImageView expandedImage;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.header)
@@ -262,6 +264,24 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
                         setColors(color);
                     }
                 });
+        forceDownload = false;
+        artistImage.setOnClickListener(view -> showLargerImage()); //Show a larger Artist image on clicking the thumbnail
+    }
+
+
+    private void showLargerImage() {
+
+        GlideApp.with(this)
+                .asBitmapPalette()
+                .load(PhonographGlideExtension.getArtistModel(artist, true))
+                .artistOptions(artist)
+                .into(new PhonographColoredTarget(expandedImage) {
+                    @Override
+                    public void onColorReady(int color) {
+                        setColors(color);
+                    }
+                });
+        expandedImage.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -412,6 +432,9 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
     @Override
     public void onBackPressed() {
         if (cab != null && cab.isActive()) cab.finish();
+        if (expandedImage.getVisibility() == View.VISIBLE) { //Dismiss large image only on back press
+            expandedImage.setVisibility(View.GONE);
+        }
         else {
             albumRecyclerView.stopScroll();
             super.onBackPressed();

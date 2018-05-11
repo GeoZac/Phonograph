@@ -79,6 +79,8 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
     ObservableRecyclerView recyclerView;
     @BindView(R.id.image)
     ImageView albumArtImageView;
+    @BindView(R.id.expanded_image)
+    ImageView expandedAlbumCover;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.header)
@@ -178,6 +180,21 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
                         setColors(color);
                     }
                 });
+
+        albumArtImageView.setOnClickListener(view -> showLargeCover()); //Show a larger Album cover on clicking the thumbnail
+    }
+
+    private void showLargeCover() {
+        GlideApp.with(this)
+                .asBitmapPalette()
+                .load(PhonographGlideExtension.getSongModel(getAlbum().safeGetFirstSong()))
+                .songOptions(getAlbum().safeGetFirstSong())
+                .into(new PhonographColoredTarget(expandedAlbumCover) {
+                    @Override
+                    public void onColorReady(int color) {
+                    }
+                });
+        expandedAlbumCover.setVisibility(View.VISIBLE);
     }
 
     private void setColors(int color) {
@@ -393,6 +410,9 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
     @Override
     public void onBackPressed() {
         if (cab != null && cab.isActive()) cab.finish();
+        if (expandedAlbumCover.getVisibility() == View.VISIBLE) {   //Dismiss large image on back press
+            expandedAlbumCover.setVisibility(View.GONE);
+        }
         else {
             recyclerView.stopScroll();
             super.onBackPressed();

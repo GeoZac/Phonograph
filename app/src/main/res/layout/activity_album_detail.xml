@@ -209,6 +209,15 @@
             android:transitionName="@string/transition_album_art"
             tools:ignore="ContentDescription,UnusedAttribute" />
 
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_margin="16dp"
+            android:visibility="invisible"
+            tools:ignore="ContentDescription" />
+
         <View
             android:id="@+id/header_overlay"
             android:layout_width="match_parent"
