@@ -15,6 +15,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_play_album"
+        android:title="@string/action_play"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_play_next"
         android:title="@string/action_play_next"
         app:showAsAction="never" />

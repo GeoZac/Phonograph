@@ -303,6 +303,9 @@ public class AlbumDetailActivity extends AbsSlidingMusicPanelActivity implements
             case R.id.action_shuffle_album:
                 MusicPlayerRemote.openAndShuffleQueue(songs, true);
                 return true;
+            case R.id.action_play_album:
+                MusicPlayerRemote.openQueue(songs, 0, true);
+                return true;
             case R.id.action_play_next:
                 MusicPlayerRemote.playNext(songs);
                 return true;
