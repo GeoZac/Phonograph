@@ -107,7 +107,7 @@ public final class PreferenceUtil {
 
     @StyleRes
     public int getGeneralTheme() {
-        return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, "light"));
+        return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, "dark"));
     }
 
     public void setGeneralTheme(String theme) {
@@ -341,7 +341,7 @@ public final class PreferenceUtil {
     }
 
     public final int getArtistGridSize(Context context) {
-        return mPreferences.getInt(ARTIST_GRID_SIZE, context.getResources().getInteger(R.integer.default_list_columns));
+        return mPreferences.getInt(ARTIST_GRID_SIZE, context.getResources().getInteger(R.integer.default_grid_columns));
     }
 
     public void setAlbumGridSizeLand(final int gridSize) {
@@ -433,7 +433,7 @@ public final class PreferenceUtil {
     }
 
     public final String autoDownloadImagesPolicy() {
-        return mPreferences.getString(AUTO_DOWNLOAD_IMAGES_POLICY, "only_wifi");
+        return mPreferences.getString(AUTO_DOWNLOAD_IMAGES_POLICY, "always");
     }
 
     public final File getStartDirectory() {
