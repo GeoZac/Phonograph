@@ -32,6 +32,7 @@ public class App extends Application {
             ThemeStore.editTheme(this)
                     .primaryColorRes(R.color.dark_primary)
                     .accentColorRes(R.color.md_pink_A400)
+                    .coloredNavigationBar(true)
                     .commit();
         }
 
