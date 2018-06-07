@@ -112,7 +112,7 @@ public class AlbumTagEditorActivity extends AbsTagEditorActivity implements Text
                                 .as(BitmapPaletteWrapper.class)
                                 .load(url)
                                 .apply(new RequestOptions()
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .diskCacheStrategy(DiskCacheStrategy.DATA)
                                         .error(R.drawable.default_album_art))
                                 .transition(new GenericTransitionOptions<BitmapPaletteWrapper>().transition(android.R.anim.fade_in))
                                 .into(new SimpleTarget<BitmapPaletteWrapper>() {
@@ -199,7 +199,7 @@ public class AlbumTagEditorActivity extends AbsTagEditorActivity implements Text
                 .load(selectedFileUri)
                 .transition(new GenericTransitionOptions<BitmapPaletteWrapper>().transition(android.R.anim.fade_in))
                 .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .skipMemoryCache(true))
                 .into(new SimpleTarget<BitmapPaletteWrapper>() {
                     @Override

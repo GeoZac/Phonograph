@@ -123,7 +123,7 @@ public class SongFileAdapter extends AbsMultiSelectAdapter<SongFileAdapter.ViewH
                     .load(new AudioFileCover(file.getPath()))
                     .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
                     .apply(new RequestOptions()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .error(error)
                             .placeholder(error)
                             .signature(new MediaStoreSignature("", file.lastModified(), 0)))

@@ -47,7 +47,7 @@ public final class PhonographGlideExtension {
     @NonNull
     public static RequestOptions artistOptions(RequestOptions requestOptions, Artist artist) {
         return requestOptions
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.default_artist_image)
                 .placeholder(R.drawable.default_artist_image)
                 .priority(Priority.LOW)
@@ -59,7 +59,7 @@ public final class PhonographGlideExtension {
     @NonNull
     public static RequestOptions songOptions(RequestOptions requestOptions, Song song) {
         return requestOptions
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.default_album_art)
                 .placeholder(R.drawable.default_album_art)
                 .signature(createSignature(song));
