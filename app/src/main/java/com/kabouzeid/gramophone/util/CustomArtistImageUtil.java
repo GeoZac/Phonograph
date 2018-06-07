@@ -55,7 +55,7 @@ public class CustomArtistImageUtil {
                 .asBitmap()
                 .load(uri)
                 .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .skipMemoryCache(true)
                 )
                 .into(new SimpleTarget<Bitmap>() {
