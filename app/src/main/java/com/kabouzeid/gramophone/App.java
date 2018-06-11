@@ -5,8 +5,10 @@ import android.os.Build;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.crashlytics.android.Crashlytics;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.gramophone.appshortcuts.DynamicShortcutManager;
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -25,6 +27,9 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if(BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         app = this;
 
         // default theme
