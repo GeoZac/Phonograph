@@ -58,8 +58,13 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         applicationId 'com.kabouzeid.gramophone'
-        versionCode 162
-        versionName '1.1.0'
+        versionCode 163
+        versionName '1.1.1'
+
+        // needed for material intro!
+        dataBinding {
+            enabled = true
+        }
     }
     signingConfigs {
         release {
@@ -95,6 +100,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // Required for IntroActivity
+    dataBinding {
+        enabled = true
     }
 }
 
