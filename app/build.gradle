@@ -153,7 +153,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
         transitive = true
     }
 }
