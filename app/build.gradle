@@ -100,6 +100,10 @@ android {
     }
 }
 
+ext {
+    glideVersion = '4.8.0'
+}
+
 dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -137,8 +141,8 @@ dependencies {
 
     implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
 
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.7.1'
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
 
     implementation 'org.bitbucket.ijabz:jaudiotagger:v2.2.5'
 
@@ -147,5 +151,5 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 }
