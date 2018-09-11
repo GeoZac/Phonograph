@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
@@ -21,6 +20,7 @@ import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.appwidgets.base.BaseAppWidget;
 import com.kabouzeid.gramophone.glide.GlideApp;
 import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
+import com.kabouzeid.gramophone.glide.PhonographSimpleTarget;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.service.MusicService;
 import com.kabouzeid.gramophone.ui.activities.MainActivity;
@@ -101,7 +101,7 @@ public class AppWidgetBig extends BaseAppWidget {
                         .load(PhonographGlideExtension.getSongModel(song))
                         .transition(PhonographGlideExtension.getDefaultTransition())
                         .songOptions(song)
-                        .into(new SimpleTarget<Bitmap>(widgetImageSize, widgetImageSize) {
+                        .into(new PhonographSimpleTarget<Bitmap>(widgetImageSize, widgetImageSize) {
                             @Override
                             public void onResourceReady(@NonNull Bitmap bitmap, Transition<? super Bitmap> transition) {
                                 update(bitmap);

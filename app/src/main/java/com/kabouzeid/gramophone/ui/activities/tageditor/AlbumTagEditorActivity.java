@@ -17,12 +17,12 @@ import android.widget.Toast;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.kabouzeid.appthemehelper.util.ToolbarContentTintHelper;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographSimpleTarget;
 import com.kabouzeid.gramophone.glide.palette.BitmapPaletteWrapper;
 import com.kabouzeid.gramophone.lastfm.rest.LastFMRestClient;
 import com.kabouzeid.gramophone.lastfm.rest.model.LastFmAlbum;
@@ -115,7 +115,7 @@ public class AlbumTagEditorActivity extends AbsTagEditorActivity implements Text
                                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                                         .error(R.drawable.default_album_art))
                                 .transition(new GenericTransitionOptions<BitmapPaletteWrapper>().transition(android.R.anim.fade_in))
-                                .into(new SimpleTarget<BitmapPaletteWrapper>() {
+                                .into(new PhonographSimpleTarget<BitmapPaletteWrapper>() {
                                     @Override
                                     public void onLoadFailed(@Nullable Drawable errorDrawable) {
                                         super.onLoadFailed(errorDrawable);
@@ -201,7 +201,7 @@ public class AlbumTagEditorActivity extends AbsTagEditorActivity implements Text
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .skipMemoryCache(true))
-                .into(new SimpleTarget<BitmapPaletteWrapper>() {
+                .into(new PhonographSimpleTarget<BitmapPaletteWrapper>() {
                     @Override
                     public void onLoadFailed(@Nullable Drawable errorDrawable) {
                         super.onLoadFailed(errorDrawable);

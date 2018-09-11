@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.gramophone.App;
 import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographSimpleTarget;
 import com.kabouzeid.gramophone.model.Artist;
 
 import java.io.BufferedOutputStream;
@@ -58,7 +58,7 @@ public class CustomArtistImageUtil {
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .skipMemoryCache(true)
                 )
-                .into(new SimpleTarget<Bitmap>() {
+                .into(new PhonographSimpleTarget<Bitmap>() {
                     @Override
                     public void onLoadFailed(@Nullable Drawable errorDrawable) {
                         super.onLoadFailed(errorDrawable);
