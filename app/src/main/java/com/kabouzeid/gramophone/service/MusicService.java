@@ -44,6 +44,7 @@ import com.kabouzeid.gramophone.glide.BlurTransformation;
 import com.kabouzeid.gramophone.glide.GlideApp;
 import com.kabouzeid.gramophone.glide.GlideRequest;
 import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
+import com.kabouzeid.gramophone.glide.PhonographSimpleTarget;
 import com.kabouzeid.gramophone.helper.ShuffleHelper;
 import com.kabouzeid.gramophone.helper.StopWatch;
 import com.kabouzeid.gramophone.loader.PlaylistSongLoader;
@@ -608,7 +609,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    request.into(new SimpleTarget<Bitmap>(screenSize.x, screenSize.y) {
+                    request.into(new PhonographSimpleTarget<Bitmap>(screenSize.x, screenSize.y) {
                         @Override
                         public void onLoadFailed(@Nullable Drawable errorDrawable) {
                             super.onLoadFailed(errorDrawable);
