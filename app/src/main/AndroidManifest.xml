@@ -119,6 +119,7 @@
             android:name=".appshortcuts.AppShortcutLauncherActivity"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".ui.activities.PurchaseActivity" />
 
         <service
             android:name=".service.MusicService"
@@ -199,7 +200,6 @@
                 android:resource="@xml/app_widget_card_info" />
         </receiver>
 
-        <activity android:name=".ui.activities.PurchaseActivity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}"

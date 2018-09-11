@@ -27,7 +27,6 @@ import com.kabouzeid.gramophone.util.ViewUtil;
  * @author Karim Abou Zeid (kabouzeid)
  */
 public class NowPlayingScreenPreferenceDialog extends DialogFragment implements MaterialDialog.SingleButtonCallback, ViewPager.OnPageChangeListener {
-    public static final String TAG = NowPlayingScreenPreferenceDialog.class.getSimpleName();
 
     private DialogAction whichButtonClicked;
     private int viewPagerPosition;
@@ -96,7 +95,8 @@ public class NowPlayingScreenPreferenceDialog extends DialogFragment implements 
         }
 
         @Override
-        public Object instantiateItem(ViewGroup collection, int position) {
+        @NonNull
+        public Object instantiateItem(@NonNull ViewGroup collection, int position) {
             NowPlayingScreen nowPlayingScreen = NowPlayingScreen.values()[position];
 
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -112,7 +112,7 @@ public class NowPlayingScreenPreferenceDialog extends DialogFragment implements 
         }
 
         @Override
-        public void destroyItem(ViewGroup collection, int position, Object view) {
+        public void destroyItem(@NonNull ViewGroup collection, int position, @NonNull Object view) {
             collection.removeView((View) view);
         }
 
@@ -122,7 +122,7 @@ public class NowPlayingScreenPreferenceDialog extends DialogFragment implements 
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
 
