@@ -1194,6 +1194,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
                 case TRACK_ENDED:
                     if (service.getRepeatMode() == REPEAT_MODE_NONE && service.isLastTrack()) {
                         service.notifyChange(PLAY_STATE_CHANGED);
+                        service.setPosition(0);
                         service.seek(0);
                     } else {
                         service.playNextSong(false);
