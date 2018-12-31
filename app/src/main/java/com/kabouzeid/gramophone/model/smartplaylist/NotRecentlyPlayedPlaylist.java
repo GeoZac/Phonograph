@@ -4,10 +4,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
-import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.loader.TopAndRecentlyPlayedTracksLoader;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.provider.HistoryStore;
+import com.kabouzeid.gramophone.R;
+import com.kabouzeid.gramophone.util.PreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -22,15 +23,28 @@ public class NotRecentlyPlayedPlaylist extends AbsSmartPlaylist {
 
     @NonNull
     @Override
+    public String getInfoString(@NonNull Context context) {
+        String baseInfo = super.getInfoString(context);
+        String cutoff = PreferenceUtil.getInstance(context).getRecentlyPlayedCutoffText(context);
+
+        if (baseInfo.isEmpty()) {return cutoff;}
+        return cutoff + INFO_STRING_SEPARATOR + baseInfo;
+    }
+
+    @NonNull
+    @Override
     public ArrayList<Song> getSongs(@NonNull Context context) {
         return TopAndRecentlyPlayedTracksLoader.getNotRecentlyPlayedTracks(context);
     }
 
     @Override
     public void clear(@NonNull Context context) {
-        HistoryStore.getInstance(context).clear();
     }
 
+    @Override
+    public boolean isClearable() {
+        return false;
+    }
 
     @Override
     public int describeContents() {
