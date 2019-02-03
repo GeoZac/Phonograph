@@ -82,7 +82,6 @@ public class SettingsActivity extends AbsBaseActivity implements ColorChooserDia
                     if (Arrays.binarySearch(NonProAllowedColors.PRIMARY_COLORS, selectedColor) < 0) {
                         // color wasn't found
                         Toast.makeText(this, R.string.only_the_first_5_colors_available, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(this, PurchaseActivity.class));
                         return;
                     }
                 }
@@ -96,7 +95,6 @@ public class SettingsActivity extends AbsBaseActivity implements ColorChooserDia
                     if (Arrays.binarySearch(NonProAllowedColors.ACCENT_COLORS, selectedColor) < 0) {
                         // color wasn't found
                         Toast.makeText(this, R.string.only_the_first_5_colors_available, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(this, PurchaseActivity.class));
                         return;
                     }
                 }
@@ -195,7 +193,6 @@ public class SettingsActivity extends AbsBaseActivity implements ColorChooserDia
                 String themeName = (String) o;
                 if (themeName.equals("black") && !App.isProVersion()) {
                     Toast.makeText(getActivity(), R.string.black_theme_is_a_pro_feature, Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getContext(), PurchaseActivity.class));
                     return false;
                 }
 

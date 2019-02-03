@@ -104,7 +104,6 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
     private void setMusicChooser(int key) {
         if (!App.isProVersion() && key == FOLDERS) {
             Toast.makeText(this, R.string.folder_view_is_a_pro_feature, Toast.LENGTH_LONG).show();
-            startActivityForResult(new Intent(this, PurchaseActivity.class), PURCHASE_REQUEST);
             key = LIBRARY;
         }
 
@@ -176,7 +175,6 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
                     new Handler().postDelayed(() -> setMusicChooser(FOLDERS), 200);
                     break;
                 case R.id.buy_pro:
-                    new Handler().postDelayed(() -> startActivityForResult(new Intent(MainActivity.this, PurchaseActivity.class), PURCHASE_REQUEST), 200);
                     break;
                 case R.id.action_scan:
                     new Handler().postDelayed(() -> {
