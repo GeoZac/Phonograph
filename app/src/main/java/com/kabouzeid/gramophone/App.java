@@ -67,10 +67,6 @@ public class App extends Application {
         });
     }
 
-    public static boolean isProVersion() {
-        return true;
-    }
-
     public static App getInstance() {
         return app;
     }
