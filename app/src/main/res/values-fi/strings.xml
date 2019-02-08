@@ -182,7 +182,6 @@
     <string name="permissions_denied">Sinulla ei ole oikeuksia tähän.</string>
     <string name="permission_external_storage_denied">Oikeus päästä muistikortille evätty.</string>
     <string name="support_development">Tue kehitystä</string>
-    <string name="thank_you">Kiitos!</string>
     <string name="version">Versio</string>
     <string name="author">Luoja</string>
     <string name="write_an_email">Kirjoita sähköpostia</string>
@@ -195,14 +194,11 @@
     <string name="translate_summary">Auta kääntämään Phonograph sinun äidinkielellesi.</string>
     <string name="rate_on_google_play">Arvostele</string>
     <string name="rate_on_google_play_summary">Jos pidät Phonographista, jätä sille positiivinen arvostelu Google Play -kaupassa.</string>
-    <string name="donate">Lahjoita</string>
-    <string name="donate_summary">Jos sinun mielestäsi minun kuuluisi saada korvausta työstäni, voit antaa minulle muutaman dollarin täällä.</string>
     <string name="aidan_follestad_summary">Teemamoottorista ja muutamista muista hienoista jutuista.</string>
     <string name="michael_cook_summary">Hienosta material-ikonista.</string>
     <string name="maarten_corpel_summary">Play-kaupan kuvituksesta ja tyhjän albumin kannesta.</string>
     <string name="aleksandar_tesic_summary">Sovelluksen designin kanssa auttamisesta.</string>
     <string name="website">Verkkosivu</string>
-    <string name="loading_products">Ladataan tuotteita...</string>
     <string name="up_next">Seuraavaksi</string>
     <string name="pref_title_now_playing_screen_appearance">Ulkonäkö</string>
     <string name="intro_label">Esittely</string>
@@ -247,7 +243,6 @@
     <string name="you_will_be_forwarded_to_the_issue_tracker_website">Sinut johdatetaan vianseurantaohjelman verkkosivulle.</string>
     <string name="app_shortcut_shuffle_all_short">Sekoita</string>
     <string name="playlist_is_empty">Soittolista on tyhjä</string>
-    <string name="only_the_first_5_colors_available">Sovelluksen ilmaisversio on rajoitettu 5 ensimmäiseen värivaihtoehtoon.</string>
     <string name="eugene_cheung_summary">Työpanoksesta sovelluksen lähdekoodin parissa.</string>
     <string name="blacklist">Estolista</string>
     <string name="remove_from_blacklist">Poista estolistalta</string>
