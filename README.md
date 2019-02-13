@@ -10,5 +10,11 @@
       src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" />
 </a>
 
+## Note 
+This fork has Pro-version and Donate options removed.If this project helped you, considering donating to the original author
 
+<a href="http://paypal.me/karimabouzeid">
+<img height="50" alt="Donate"
+      src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=popout&logo=paypal" />
+</a>
 
