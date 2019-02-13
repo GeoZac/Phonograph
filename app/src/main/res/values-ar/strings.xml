@@ -157,7 +157,6 @@
     <string name="permissions_denied">أذونات مرفوضة</string>
     <string name="permission_external_storage_denied">تم رفض الإذن للوصول إلى الذاكرة الخارجية</string>
     <string name="support_development">دعم التطوير</string>
-    <string name="thank_you">شكراً لك!</string>
     <string name="version">النسخة</string>
     <string name="author">المؤلف</string>
     <string name="follow_on_twitter">تابع في تويتر</string>
@@ -168,14 +167,11 @@
     <string name="translate_summary">ساعدنا في ترجمة Phonograph إلى لغتك الأم</string>
     <string name="rate_on_google_play">قيّم</string>
     <string name="rate_on_google_play_summary">اترك تقييماً إيجابياً في متجر جوجل بلاي إذا أعجبك التطبيق.</string>
-    <string name="donate">تبرع لنا</string>
-    <string name="donate_summary">إذا كنت ترى أنني أستحق أن أحصل على جزاء مقابل عملي، يمكنك أن تكافئني ببضعة دولارات هنا.</string>
     <string name="aidan_follestad_summary">من أجل محرك السمات وميزات جميلة أخرى</string>
     <string name="michael_cook_summary">من أجل شعار التطبيق المطابق لفلسفة ماتيريال ديزاين</string>
     <string name="maarten_corpel_summary">من أجل وضع توضيحات البرنامج المتواجدة على المتجر وأيضاً صورة الألبوم الإفتراضية</string>
     <string name="aleksandar_tesic_summary">لمساعدتي في تصميم البرنامج</string>
     <string name="website">الموقع</string>
-    <string name="loading_products">يتم تحميل المنتجات...</string>
     <string name="up_next">التالي</string>
     <string name="pref_title_now_playing_screen_appearance">المظهر</string>
     <string name="intro_label">المقدمة</string>
