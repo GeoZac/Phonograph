@@ -9,6 +9,10 @@ cache_key: &cache_key
 
 jobs:
   build:
+    branches:
+      ignore:
+        - master
+        
     working_directory: ~/Phonograph
 
     docker:
