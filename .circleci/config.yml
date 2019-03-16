@@ -23,6 +23,9 @@ jobs:
 
     steps:
       - checkout
+      
+      - restore_cache:
+          <<: *cache_key
 
       - run:
           name: Assemble
@@ -39,3 +42,9 @@ jobs:
       - store_artifacts:
           path: app/build/reports
           destination: reports
+
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
