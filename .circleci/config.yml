@@ -24,6 +24,11 @@ jobs:
     steps:
       - checkout
       
+      - run:
+          name: Setup Fabric
+          command: |
+            echo "apiKey=$CRASHLYTICS_API_KEY" > app/fabric.properties;
+      
       - restore_cache:
           <<: *cache_key
 
