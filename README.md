@@ -1,5 +1,6 @@
 # Phonograph
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/kabouzeid/Phonograph/blob/master/LICENSE.txt)
+[![Build Status](https://circleci.com/gh/GeoZac/Phonograph.svg?style=svg)](https://circleci.com/gh/GeoZac/Phonograph)
 
 **A material designed local music player for Android.**
 
