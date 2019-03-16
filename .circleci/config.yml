@@ -32,6 +32,10 @@ jobs:
           path: app/build/outputs/apk
           destination: apk
 
+      - run:
+          name: Run Lint
+          command: ./gradlew lintRelease
+          
       - store_artifacts:
           path: app/build/reports
           destination: reports
