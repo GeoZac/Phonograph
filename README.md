@@ -6,13 +6,15 @@
 
 ![Screenshots](./art/art.jpg?raw=true)
 
-<a href="https://play.google.com/store/apps/details?id=com.kabouzeid.gramophone">
-  <img height="50" alt="Get it on Google Play"
-      src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" />
-</a>
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.kabouzeid.gramophone/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=com.kabouzeid.gramophone)
 
 ## Note 
-This fork has Pro-version and Donate options removed.If this project helped you, considering donating to the original author
+This fork has Pro-version and Donate options removed.If this project helped you, consider donating to the original author
 
 <a href="http://paypal.me/karimabouzeid">
 <img height="50" alt="Donate"

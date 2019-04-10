@@ -73,3 +73,5 @@ fastlane/test_output
 fastlane/metadata/
 
 app/fabric\.properties
+
+Gemfile.lock
