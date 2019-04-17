@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.provider.HistoryStore;
 import com.kabouzeid.gramophone.provider.SongPlayCountStore;
+import com.kabouzeid.gramophone.util.PreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,23 @@ public class TopAndRecentlyPlayedTracksLoader {
     @NonNull
     public static ArrayList<Song> getRecentlyPlayedTracks(@NonNull Context context) {
         return SongLoader.getSongs(makeRecentTracksCursorAndClearUpDatabase(context));
+    }
+
+    @NonNull
+    public static ArrayList<Song> getNotRecentlyPlayedTracks
+(@NonNull Context context) {
+        ArrayList<Song> allSongs = SongLoader.getSongs(
+            SongLoader.makeSongCursor(
+                context,
+                null, null,
+                MediaStore.Audio.Media.DATE_ADDED + " ASC"));
+
+        ArrayList<Song> recentlyPlayedSongs = SongLoader.getSongs(
+            makeRecentTracksCursorAndClearUpDatabase(context));
+
+        allSongs.removeAll(recentlyPlayedSongs);
+
+        return allSongs;
     }
 
     @NonNull
@@ -77,7 +95,8 @@ public class TopAndRecentlyPlayedTracksLoader {
     @Nullable
     private static SortedLongCursor makeRecentTracksCursorImpl(@NonNull final Context context) {
         // first get the top results ids from the internal database
-        Cursor songs = HistoryStore.getInstance(context).queryRecentIds();
+        final long cutoff = PreferenceUtil.getInstance(context).getRecentlyPlayedCutoffTimeMillis();
+        Cursor songs = HistoryStore.getInstance(context).queryRecentIds(cutoff);
 
         try {
             return makeSortedCursor(context, songs,

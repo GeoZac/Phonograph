@@ -12,7 +12,6 @@ import androidx.annotation.StyleRes;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.helper.SortOrder;
 import com.kabouzeid.gramophone.model.CategoryInfo;
@@ -63,6 +62,7 @@ public final class PreferenceUtil {
     public static final String GAPLESS_PLAYBACK = "gapless_playback";
 
     public static final String LAST_ADDED_CUTOFF = "last_added_interval";
+    public static final String RECENTLY_PLAYED_CUTOFF = "recently_played_interval";
 
     public static final String ALBUM_ART_ON_LOCKSCREEN = "album_art_on_lockscreen";
     public static final String BLURRED_ALBUM_ART = "blurred_album_art";
@@ -284,11 +284,21 @@ public final class PreferenceUtil {
         return mPreferences.getString(GENRE_SORT_ORDER, SortOrder.GenreSortOrder.GENRE_A_Z);
     }
 
-    public long getLastAddedCutoff() {
+    // The last added cutoff time is compared against the Android media store timestamps, which is seconds based.
+    public long getLastAddedCutoffTimeSecs() {
+        return getCutoffTimeMillis(LAST_ADDED_CUTOFF) / 1000;
+    }
+
+    // The recently played cutoff time is compared against the internal (private) database timestamps, which is milliseconds based.
+    public long getRecentlyPlayedCutoffTimeMillis() {
+        return getCutoffTimeMillis(RECENTLY_PLAYED_CUTOFF);
+    }
+
+    private long getCutoffTimeMillis(final String cutoff) {
         final CalendarUtil calendarUtil = new CalendarUtil();
         long interval;
 
-        switch (mPreferences.getString(LAST_ADDED_CUTOFF, "")) {
+        switch (mPreferences.getString(cutoff, "")) {
             case "today":
                 interval = calendarUtil.getElapsedToday();
                 break;
@@ -315,7 +325,38 @@ public final class PreferenceUtil {
                 break;
         }
 
-        return (System.currentTimeMillis() - interval) / 1000;
+        return (System.currentTimeMillis() - interval);
+    }
+
+    public String getLastAddedCutoffText(Context context) {
+        return getCutoffText(LAST_ADDED_CUTOFF, context);
+    }
+
+    public String getRecentlyPlayedCutoffText(Context context) {
+        return getCutoffText(RECENTLY_PLAYED_CUTOFF, context);
+    }
+
+    private String getCutoffText(final String cutoff, Context context) {
+        switch (mPreferences.getString(cutoff, "")) {
+            case "today":
+                return context.getString(R.string.today);
+
+            case "this_week":
+                return context.getString(R.string.this_week);
+
+             case "past_seven_days":
+                 return context.getString(R.string.past_seven_days);
+
+            case "past_three_months":
+                return context.getString(R.string.past_three_months);
+
+            case "this_year":
+                return context.getString(R.string.this_year);
+
+            case "this_month":
+            default:
+                return context.getString(R.string.this_month);
+        }
     }
 
     public int getLastSleepTimerValue() {

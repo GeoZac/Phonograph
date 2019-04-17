@@ -7,19 +7,18 @@ import androidx.annotation.NonNull;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.loader.TopAndRecentlyPlayedTracksLoader;
 import com.kabouzeid.gramophone.model.Song;
-import com.kabouzeid.gramophone.provider.HistoryStore;
 import com.kabouzeid.gramophone.util.MusicUtil;
 import com.kabouzeid.gramophone.util.PreferenceUtil;
 
 import java.util.ArrayList;
 
 /**
- * @author Karim Abou Zeid (kabouzeid)
+ * @author SC (soncaokim)
  */
-public class HistoryPlaylist extends AbsSmartPlaylist {
+public class NotRecentlyPlayedPlaylist extends AbsSmartPlaylist {
 
-    public HistoryPlaylist(@NonNull Context context) {
-        super(context.getString(R.string.history), R.drawable.ic_access_time_white_24dp);
+    public NotRecentlyPlayedPlaylist(@NonNull Context context) {
+        super(context.getString(R.string.not_recently_played), R.drawable.ic_watch_later_white_24dp);
     }
 
     @NonNull
@@ -36,31 +35,34 @@ public class HistoryPlaylist extends AbsSmartPlaylist {
     @NonNull
     @Override
     public ArrayList<Song> getSongs(@NonNull Context context) {
-        return TopAndRecentlyPlayedTracksLoader.getRecentlyPlayedTracks(context);
+        return TopAndRecentlyPlayedTracksLoader.getNotRecentlyPlayedTracks(context);
     }
 
     @Override
     public void clear(@NonNull Context context) {
-        HistoryStore.getInstance(context).clear();
     }
 
+    @Override
+    public boolean isClearable() {
+        return false;
+    }
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    protected HistoryPlaylist(Parcel in) {
+    protected NotRecentlyPlayedPlaylist(Parcel in) {
         super(in);
     }
 
-    public static final Creator<HistoryPlaylist> CREATOR = new Creator<HistoryPlaylist>() {
-        public HistoryPlaylist createFromParcel(Parcel source) {
-            return new HistoryPlaylist(source);
+    public static final Creator<NotRecentlyPlayedPlaylist> CREATOR = new Creator<NotRecentlyPlayedPlaylist>() {
+        public NotRecentlyPlayedPlaylist createFromParcel(Parcel source) {
+            return new NotRecentlyPlayedPlaylist(source);
         }
 
-        public HistoryPlaylist[] newArray(int size) {
-            return new HistoryPlaylist[size];
+        public NotRecentlyPlayedPlaylist[] newArray(int size) {
+            return new NotRecentlyPlayedPlaylist[size];
         }
     };
 }
