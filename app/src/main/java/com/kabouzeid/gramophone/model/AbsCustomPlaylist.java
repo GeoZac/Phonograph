@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.kabouzeid.gramophone.util.MusicUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Karim Abou Zeid (kabouzeid)
@@ -25,7 +26,7 @@ public abstract class AbsCustomPlaylist extends Playlist {
     }
 
     @NonNull
-    public abstract ArrayList<Song> getSongs(Context context);
+    public abstract List<Song> getSongs(Context context);
 
     @NonNull
     @Override

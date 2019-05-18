@@ -11,6 +11,7 @@ import com.kabouzeid.gramophone.util.MusicUtil;
 import com.kabouzeid.gramophone.util.PreferenceUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author SC (soncaokim)
@@ -34,7 +35,7 @@ public class NotRecentlyPlayedPlaylist extends AbsSmartPlaylist {
 
     @NonNull
     @Override
-    public ArrayList<Song> getSongs(@NonNull Context context) {
+    public List<Song> getSongs(@NonNull Context context) {
         return TopAndRecentlyPlayedTracksLoader.getNotRecentlyPlayedTracks(context);
     }
 

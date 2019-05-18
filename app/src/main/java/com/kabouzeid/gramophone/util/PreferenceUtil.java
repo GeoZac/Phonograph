@@ -21,6 +21,7 @@ import com.kabouzeid.gramophone.ui.fragments.player.NowPlayingScreen;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class PreferenceUtil {
     public static final String GENERAL_THEME = "general_theme";
@@ -539,9 +540,9 @@ public final class PreferenceUtil {
         return mPreferences.getBoolean(INITIALIZED_BLACKLIST, false);
     }
 
-    public void setLibraryCategoryInfos(ArrayList<CategoryInfo> categories) {
+    public void setLibraryCategoryInfos(List<CategoryInfo> categories) {
         Gson gson = new Gson();
-        Type collectionType = new TypeToken<ArrayList<CategoryInfo>>() {
+        Type collectionType = new TypeToken<List<CategoryInfo>>() {
         }.getType();
 
         final SharedPreferences.Editor editor = mPreferences.edit();
@@ -549,11 +550,11 @@ public final class PreferenceUtil {
         editor.apply();
     }
 
-    public ArrayList<CategoryInfo> getLibraryCategoryInfos() {
+    public List<CategoryInfo> getLibraryCategoryInfos() {
         String data = mPreferences.getString(LIBRARY_CATEGORIES, null);
         if (data != null) {
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<CategoryInfo>>() {
+            Type collectionType = new TypeToken<List<CategoryInfo>>() {
             }.getType();
 
             try {
@@ -566,8 +567,8 @@ public final class PreferenceUtil {
         return getDefaultLibraryCategoryInfos();
     }
 
-    public ArrayList<CategoryInfo> getDefaultLibraryCategoryInfos() {
-        ArrayList<CategoryInfo> defaultCategoryInfos = new ArrayList<>(5);
+    public List<CategoryInfo> getDefaultLibraryCategoryInfos() {
+        List<CategoryInfo> defaultCategoryInfos = new ArrayList<>(5);
         defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.SONGS, true));
         defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.ALBUMS, true));
         defaultCategoryInfos.add(new CategoryInfo(CategoryInfo.Category.ARTISTS, true));
