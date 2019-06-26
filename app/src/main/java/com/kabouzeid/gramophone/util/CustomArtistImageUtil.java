@@ -8,15 +8,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
-
+import androidx.annotation.Nullable;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.gramophone.App;
+import com.kabouzeid.gramophone.glide.GlideApp;
 import com.kabouzeid.gramophone.model.Artist;
 
 import java.io.BufferedOutputStream;
@@ -50,21 +51,21 @@ public class CustomArtistImageUtil {
     }
 
     public void setCustomArtistImage(final Artist artist, Uri uri) {
-        Glide.with(App.getInstance())
-                .load(uri)
+        GlideApp.with(App.getInstance())
                 .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
+                .load(uri)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .skipMemoryCache(true)
+                )
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                        e.printStackTrace();
-                        Toast.makeText(App.getInstance(), e.toString(), Toast.LENGTH_LONG).show();
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        super.onLoadFailed(errorDrawable);
                     }
 
                     @Override
-                    public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> glideAnimation) {
                         new AsyncTask<Void, Void, Void>() {
                             @SuppressLint("ApplySharedPref")
                             @Override
@@ -88,7 +89,7 @@ public class CustomArtistImageUtil {
 
                                 if (succesful) {
                                     mPreferences.edit().putBoolean(getFileName(artist), true).commit();
-                                    ArtistSignatureUtil.getInstance(App.getInstance()).updateArtistSignature(artist.getName());
+                                    ArtistSignatureUtil.getInstance().updateArtistSignature(artist.getName());
                                     App.getInstance().getContentResolver().notifyChange(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, null); // trigger media store changed to force artist image reload
                                 }
                                 return null;
@@ -104,7 +105,7 @@ public class CustomArtistImageUtil {
             @Override
             protected Void doInBackground(Void... params) {
                 mPreferences.edit().putBoolean(getFileName(artist), false).commit();
-                ArtistSignatureUtil.getInstance(App.getInstance()).updateArtistSignature(artist.getName());
+                ArtistSignatureUtil.getInstance().updateArtistSignature(artist.getName());
                 App.getInstance().getContentResolver().notifyChange(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, null); // trigger media store changed to force artist image reload
 
                 File file = getFile(artist);

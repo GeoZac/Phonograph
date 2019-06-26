@@ -21,15 +21,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.dialogs.ChangelogDialog;
 import com.kabouzeid.gramophone.dialogs.ScanMediaFolderChooserDialog;
-import com.kabouzeid.gramophone.glide.SongGlideRequest;
+import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.helper.MusicPlayerRemote;
 import com.kabouzeid.gramophone.helper.SearchQueryHelper;
 import com.kabouzeid.gramophone.loader.AlbumLoader;
@@ -86,7 +85,7 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
         setUpDrawerLayout();
 
         if (savedInstanceState == null) {
-            setMusicChooser(PreferenceUtil.getInstance(this).getLastMusicChooser());
+            setMusicChooser(PreferenceUtil.getInstance().getLastMusicChooser());
         } else {
             restoreCurrentFragment();
         }
@@ -100,7 +99,8 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
     }
 
     private void setMusicChooser(int key) {
-        PreferenceUtil.getInstance(this).setLastMusicChooser(key);
+        PreferenceUtil.getInstance().setLastMusicChooser(key);
+
         switch (key) {
             case LIBRARY:
                 navigationView.setCheckedItem(R.id.nav_library);
@@ -197,8 +197,11 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
             }
             ((TextView) navigationDrawerHeader.findViewById(R.id.title)).setText(song.title);
             ((TextView) navigationDrawerHeader.findViewById(R.id.text)).setText(MusicUtil.getSongInfoString(song));
-            SongGlideRequest.Builder.from(Glide.with(this), song)
-                    .checkIgnoreMediaStore(this).build()
+            GlideApp.with(this)
+                    .asDrawable()
+                    .load(PhonographGlideExtension.getSongModel(song))
+                    .transition(PhonographGlideExtension.getDefaultTransition())
+                    .songOptions(song)
                     .into(((ImageView) navigationDrawerHeader.findViewById(R.id.image)));
         } else {
             if (navigationDrawerHeader != null) {
@@ -322,8 +325,8 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
     }
 
     private boolean checkShowIntro() {
-        if (!PreferenceUtil.getInstance(this).introShown()) {
-            PreferenceUtil.getInstance(this).setIntroShown();
+        if (!PreferenceUtil.getInstance().introShown()) {
+            PreferenceUtil.getInstance().setIntroShown();
             ChangelogDialog.setChangelogRead(this);
             blockRequestPermissions = true;
             new Handler().postDelayed(() -> startActivityForResult(new Intent(MainActivity.this, AppIntroActivity.class), APP_INTRO_REQUEST), 50);
@@ -336,7 +339,7 @@ public class MainActivity extends AbsSlidingMusicPanelActivity {
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             int currentVersion = pInfo.versionCode;
-            if (currentVersion != PreferenceUtil.getInstance(this).getLastChangelogVersion()) {
+            if (currentVersion != PreferenceUtil.getInstance().getLastChangelogVersion()) {
                 ChangelogDialog.create().show(getSupportFragmentManager(), "CHANGE_LOG_DIALOG");
             }
         } catch (PackageManager.NameNotFoundException e) {

@@ -11,13 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.adapter.base.AbsMultiSelectAdapter;
 import com.kabouzeid.gramophone.adapter.base.MediaEntryViewHolder;
-import com.kabouzeid.gramophone.glide.ArtistGlideRequest;
+import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.glide.PhonographColoredTarget;
 import com.kabouzeid.gramophone.helper.SortOrder;
 import com.kabouzeid.gramophone.helper.menu.SongsMenuHelper;
@@ -125,8 +125,11 @@ public class ArtistAdapter extends AbsMultiSelectAdapter<ArtistAdapter.ViewHolde
 
     protected void loadArtistImage(Artist artist, final ViewHolder holder) {
         if (holder.image == null) return;
-        ArtistGlideRequest.Builder.from(Glide.with(activity), artist)
-                .generatePalette(activity).build()
+        GlideApp.with(activity)
+                .asBitmapPalette()
+                .load(PhonographGlideExtension.getArtistModel(artist))
+                .transition(PhonographGlideExtension.getDefaultTransition())
+                .artistOptions(artist)
                 .into(new PhonographColoredTarget(holder.image) {
                     @Override
                     public void onLoadCleared(Drawable placeholder) {
@@ -177,7 +180,7 @@ public class ArtistAdapter extends AbsMultiSelectAdapter<ArtistAdapter.ViewHolde
     @Override
     public String getSectionName(int position) {
         @Nullable String sectionName = null;
-        switch (PreferenceUtil.getInstance(activity).getArtistSortOrder()) {
+        switch (PreferenceUtil.getInstance().getArtistSortOrder()) {
             case SortOrder.ArtistSortOrder.ARTIST_A_Z:
             case SortOrder.ArtistSortOrder.ARTIST_Z_A:
                 sectionName = dataSet.get(position).getName();

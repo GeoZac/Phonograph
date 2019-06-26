@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.kabouzeid.gramophone.R;
+import com.kabouzeid.gramophone.glide.GlideApp;
 import com.kabouzeid.gramophone.glide.PhonographColoredTarget;
-import com.kabouzeid.gramophone.glide.SongGlideRequest;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.misc.CustomFragmentStatePagerAdapter;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.util.PreferenceUtil;
@@ -115,23 +115,25 @@ public class AlbumCoverPagerAdapter extends CustomFragmentStatePagerAdapter {
             super.onViewCreated(view, savedInstanceState);
             forceSquareAlbumCover(false);
             // TODO
-//            forceSquareAlbumCover(PreferenceUtil.getInstance(getContext()).forceSquareAlbumCover());
-            PreferenceUtil.getInstance(getActivity()).registerOnSharedPreferenceChangedListener(this);
+//            forceSquareAlbumCover(PreferenceUtil.getInstance().forceSquareAlbumCover());
+            PreferenceUtil.getInstance().registerOnSharedPreferenceChangedListener(this);
             loadAlbumCover();
         }
 
         @Override
         public void onDestroyView() {
             super.onDestroyView();
-            PreferenceUtil.getInstance(getActivity()).unregisterOnSharedPreferenceChangedListener(this);
+            PreferenceUtil.getInstance().unregisterOnSharedPreferenceChangedListener(this);
             unbinder.unbind();
             colorReceiver = null;
         }
 
         private void loadAlbumCover() {
-            SongGlideRequest.Builder.from(Glide.with(this), song)
-                    .checkIgnoreMediaStore(getActivity())
-                    .generatePalette(getActivity()).build()
+            GlideApp.with(this)
+                    .asBitmapPalette()
+                    .load(PhonographGlideExtension.getSongModel(song))
+                    .transition(PhonographGlideExtension.getDefaultTransition())
+                    .songOptions(song)
                     .into(new PhonographColoredTarget(albumCover) {
                         @Override
                         public void onColorReady(int color) {
@@ -145,7 +147,7 @@ public class AlbumCoverPagerAdapter extends CustomFragmentStatePagerAdapter {
             switch (key) {
                 case PreferenceUtil.FORCE_SQUARE_ALBUM_COVER:
                     // TODO
-//                    forceSquareAlbumCover(PreferenceUtil.getInstance(getActivity()).forceSquareAlbumCover());
+//                    forceSquareAlbumCover(PreferenceUtil.getInstance().forceSquareAlbumCover());
                     break;
             }
         }

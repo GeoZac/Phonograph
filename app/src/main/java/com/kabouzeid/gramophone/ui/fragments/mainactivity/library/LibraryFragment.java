@@ -80,7 +80,7 @@ public class LibraryFragment extends AbsMainActivityFragment implements CabHolde
 
     @Override
     public void onDestroyView() {
-        PreferenceUtil.getInstance(getActivity()).unregisterOnSharedPreferenceChangedListener(this);
+        PreferenceUtil.getInstance().unregisterOnSharedPreferenceChangedListener(this);
         super.onDestroyView();
         pager.removeOnPageChangeListener(this);
         unbinder.unbind();
@@ -88,8 +88,8 @@ public class LibraryFragment extends AbsMainActivityFragment implements CabHolde
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        PreferenceUtil.getInstance(getActivity()).registerOnSharedPreferenceChangedListener(this);
         getMainActivity().setStatusbarColorAuto();
+        PreferenceUtil.getInstance().registerOnSharedPreferenceChangedListener(this);
         getMainActivity().setNavigationbarColorAuto();
         getMainActivity().setTaskDescriptionColorAuto();
 
@@ -101,12 +101,12 @@ public class LibraryFragment extends AbsMainActivityFragment implements CabHolde
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
         if (PreferenceUtil.LIBRARY_CATEGORIES.equals(key)) {
             Fragment current = getCurrentFragment();
-            pagerAdapter.setCategoryInfos(PreferenceUtil.getInstance(getActivity()).getLibraryCategoryInfos());
+            pagerAdapter.setCategoryInfos(PreferenceUtil.getInstance().getLibraryCategoryInfos());
             pager.setOffscreenPageLimit(pagerAdapter.getCount() - 1);
             int position = pagerAdapter.getItemPosition(current);
             if (position < 0) position = 0;
             pager.setCurrentItem(position);
-            PreferenceUtil.getInstance(getContext()).setLastPage(position);
+            PreferenceUtil.getInstance().setLastPage(position);
 
             updateTabVisibility();
         }
@@ -136,9 +136,9 @@ public class LibraryFragment extends AbsMainActivityFragment implements CabHolde
         tabs.setSelectedTabIndicatorColor(ThemeStore.accentColor(getActivity()));
 
         updateTabVisibility();
-
-        if (PreferenceUtil.getInstance(getContext()).rememberLastTab()) {
-            pager.setCurrentItem(PreferenceUtil.getInstance(getContext()).getLastPage());
+        
+        if (PreferenceUtil.getInstance().rememberLastTab()) {
+            pager.setCurrentItem(PreferenceUtil.getInstance().getLastPage());
         }
         pager.addOnPageChangeListener(this);
     }
@@ -443,7 +443,7 @@ public class LibraryFragment extends AbsMainActivityFragment implements CabHolde
 
     @Override
     public void onPageSelected(int position) {
-        PreferenceUtil.getInstance(getActivity()).setLastPage(position);
+        PreferenceUtil.getInstance().setLastPage(position);
     }
 
     @Override

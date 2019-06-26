@@ -1,9 +1,11 @@
 package com.kabouzeid.gramophone.glide;
 
 import android.graphics.drawable.Drawable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.glide.palette.BitmapPaletteTarget;
@@ -16,13 +18,13 @@ public abstract class PhonographColoredTarget extends BitmapPaletteTarget {
     }
 
     @Override
-    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-        super.onLoadFailed(e, errorDrawable);
+    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+        super.onLoadFailed(errorDrawable);
         onColorReady(getDefaultFooterColor());
     }
 
     @Override
-    public void onResourceReady(BitmapPaletteWrapper resource, GlideAnimation<? super BitmapPaletteWrapper> glideAnimation) {
+    public void onResourceReady(@NonNull BitmapPaletteWrapper resource, Transition<? super BitmapPaletteWrapper> glideAnimation) {
         super.onResourceReady(resource, glideAnimation);
         onColorReady(PhonographColorUtil.getColor(resource.getPalette(), getDefaultFooterColor()));
     }

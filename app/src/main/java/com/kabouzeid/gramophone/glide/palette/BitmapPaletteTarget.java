@@ -1,5 +1,6 @@
 package com.kabouzeid.gramophone.glide.palette;
 
+import androidx.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.request.target.ImageViewTarget;
@@ -10,7 +11,9 @@ public class BitmapPaletteTarget extends ImageViewTarget<BitmapPaletteWrapper> {
     }
 
     @Override
-    protected void setResource(BitmapPaletteWrapper bitmapPaletteWrapper) {
-        view.setImageBitmap(bitmapPaletteWrapper.getBitmap());
+    protected void setResource(@Nullable BitmapPaletteWrapper bitmapPaletteWrapper) {
+        if (bitmapPaletteWrapper != null) {
+            view.setImageBitmap(bitmapPaletteWrapper.getBitmap());
+        }
     }
 }
