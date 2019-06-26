@@ -9,12 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.adapter.base.MediaEntryViewHolder;
-import com.kabouzeid.gramophone.glide.ArtistGlideRequest;
-import com.kabouzeid.gramophone.glide.SongGlideRequest;
+import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.helper.MusicPlayerRemote;
 import com.kabouzeid.gramophone.helper.menu.SongMenuHelper;
 import com.kabouzeid.gramophone.model.Album;
@@ -73,16 +72,23 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 final Album album = (Album) dataSet.get(position);
                 holder.title.setText(album.getTitle());
                 holder.text.setText(MusicUtil.getAlbumInfoString(activity, album));
-                SongGlideRequest.Builder.from(Glide.with(activity), album.safeGetFirstSong())
-                        .checkIgnoreMediaStore(activity).build()
+                GlideApp.with(activity)
+                        .asDrawable()
+                        .load(PhonographGlideExtension.getSongModel(album.safeGetFirstSong()))
+                        .transition(PhonographGlideExtension.getDefaultTransition())
+                        .songOptions(album.safeGetFirstSong())
                         .into(holder.image);
                 break;
             case ARTIST:
                 final Artist artist = (Artist) dataSet.get(position);
                 holder.title.setText(artist.getName());
                 holder.text.setText(MusicUtil.getArtistInfoString(activity, artist));
-                ArtistGlideRequest.Builder.from(Glide.with(activity), artist)
-                        .build().into(holder.image);
+                GlideApp.with(activity)
+                        .asBitmap()
+                        .load(PhonographGlideExtension.getArtistModel(artist))
+                        .transition(PhonographGlideExtension.getDefaultTransition())
+                        .artistOptions(artist)
+                        .into(holder.image);
                 break;
             case SONG:
                 final Song song = (Song) dataSet.get(position);

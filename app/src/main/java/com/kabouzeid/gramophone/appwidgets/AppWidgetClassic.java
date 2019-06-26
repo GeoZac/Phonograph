@@ -6,20 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.palette.graphics.Palette;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.appwidgets.base.BaseAppWidget;
-import com.kabouzeid.gramophone.glide.SongGlideRequest;
+import com.kabouzeid.gramophone.glide.GlideApp;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.glide.palette.BitmapPaletteWrapper;
 import com.kabouzeid.gramophone.model.Song;
 import com.kabouzeid.gramophone.service.MusicService;
@@ -32,7 +33,7 @@ public class AppWidgetClassic extends BaseAppWidget {
     private static AppWidgetClassic mInstance;
     private static int imageSize = 0;
     private static float cardRadius = 0f;
-    private Target<BitmapPaletteWrapper> target; // for cancellation
+    private Target target; // for cancellation
 
     public static synchronized AppWidgetClassic getInstance() {
         if (mInstance == null) {
@@ -90,22 +91,23 @@ public class AppWidgetClassic extends BaseAppWidget {
             @Override
             public void run() {
                 if (target != null) {
-                    Glide.clear(target);
+                    GlideApp.with(appContext).clear(target);
                 }
-                target = SongGlideRequest.Builder.from(Glide.with(appContext), song)
-                        .checkIgnoreMediaStore(appContext)
-                        .generatePalette(service).build()
-                        .centerCrop()
+                target = GlideApp.with(appContext)
+                        .asBitmapPalette()
+                        .load(PhonographGlideExtension.getSongModel(song))
+                        .transition(PhonographGlideExtension.getDefaultTransition())
+                        .songOptions(song)
                         .into(new SimpleTarget<BitmapPaletteWrapper>(imageSize, imageSize) {
                             @Override
-                            public void onResourceReady(BitmapPaletteWrapper resource, GlideAnimation<? super BitmapPaletteWrapper> glideAnimation) {
+                            public void onResourceReady(@NonNull BitmapPaletteWrapper resource, Transition<? super BitmapPaletteWrapper> glideAnimation) {
                                 Palette palette = resource.getPalette();
                                 update(resource.getBitmap(), palette.getVibrantColor(palette.getMutedColor(MaterialValueHelper.getSecondaryTextColor(appContext, true))));
                             }
 
                             @Override
-                            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                                super.onLoadFailed(e, errorDrawable);
+                            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                super.onLoadFailed(errorDrawable);
                                 update(null, MaterialValueHelper.getSecondaryTextColor(appContext, true));
                             }
 

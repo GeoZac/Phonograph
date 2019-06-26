@@ -56,7 +56,7 @@ public abstract class AbsSlidingMusicPanelActivity extends AbsMusicServiceActivi
         setContentView(createContentView());
         ButterKnife.bind(this);
 
-        currentNowPlayingScreen = PreferenceUtil.getInstance(this).getNowPlayingScreen();
+        currentNowPlayingScreen = PreferenceUtil.getInstance().getNowPlayingScreen();
         Fragment fragment; // must implement AbsPlayerFragment
         switch (currentNowPlayingScreen) {
             case FLAT:
@@ -101,7 +101,7 @@ public abstract class AbsSlidingMusicPanelActivity extends AbsMusicServiceActivi
     @Override
     protected void onResume() {
         super.onResume();
-        if (currentNowPlayingScreen != PreferenceUtil.getInstance(this).getNowPlayingScreen()) {
+        if (currentNowPlayingScreen != PreferenceUtil.getInstance().getNowPlayingScreen()) {
             postRecreate();
         }
     }

@@ -63,12 +63,12 @@ public class ArtistsFragment extends AbsLibraryPagerRecyclerViewCustomGridSizeFr
 
     @Override
     protected String loadSortOrder() {
-        return PreferenceUtil.getInstance(getActivity()).getArtistSortOrder();
+        return PreferenceUtil.getInstance().getArtistSortOrder();
     }
 
     @Override
     protected void saveSortOrder(String sortOrder) {
-        PreferenceUtil.getInstance(getActivity()).setArtistSortOrder(sortOrder);
+        PreferenceUtil.getInstance().setArtistSortOrder(sortOrder);
     }
 
     @Override
@@ -78,32 +78,32 @@ public class ArtistsFragment extends AbsLibraryPagerRecyclerViewCustomGridSizeFr
 
     @Override
     protected int loadGridSize() {
-        return PreferenceUtil.getInstance(getActivity()).getArtistGridSize(getActivity());
+        return PreferenceUtil.getInstance().getArtistGridSize(getActivity());
     }
 
     @Override
     protected void saveGridSize(int gridSize) {
-        PreferenceUtil.getInstance(getActivity()).setArtistGridSize(gridSize);
+        PreferenceUtil.getInstance().setArtistGridSize(gridSize);
     }
 
     @Override
     protected int loadGridSizeLand() {
-        return PreferenceUtil.getInstance(getActivity()).getArtistGridSizeLand(getActivity());
+        return PreferenceUtil.getInstance().getArtistGridSizeLand(getActivity());
     }
 
     @Override
     protected void saveGridSizeLand(int gridSize) {
-        PreferenceUtil.getInstance(getActivity()).setArtistGridSizeLand(gridSize);
+        PreferenceUtil.getInstance().setArtistGridSizeLand(gridSize);
     }
 
     @Override
     protected void saveUsePalette(boolean usePalette) {
-        PreferenceUtil.getInstance(getActivity()).setArtistColoredFooters(usePalette);
+        PreferenceUtil.getInstance().setArtistColoredFooters(usePalette);
     }
 
     @Override
     public boolean loadUsePalette() {
-        return PreferenceUtil.getInstance(getActivity()).artistColoredFooters();
+        return PreferenceUtil.getInstance().artistColoredFooters();
     }
 
     @Override

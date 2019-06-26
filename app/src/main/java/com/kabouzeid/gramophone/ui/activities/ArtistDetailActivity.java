@@ -32,7 +32,6 @@ import java.util.Locale;
 import com.afollestad.materialcab.MaterialCab;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
-import com.bumptech.glide.Glide;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
@@ -41,8 +40,9 @@ import com.kabouzeid.gramophone.adapter.album.HorizontalAlbumAdapter;
 import com.kabouzeid.gramophone.adapter.song.ArtistSongAdapter;
 import com.kabouzeid.gramophone.dialogs.AddToPlaylistDialog;
 import com.kabouzeid.gramophone.dialogs.SleepTimerDialog;
-import com.kabouzeid.gramophone.glide.ArtistGlideRequest;
+import com.kabouzeid.gramophone.glide.GlideApp;
 import com.kabouzeid.gramophone.glide.PhonographColoredTarget;
+import com.kabouzeid.gramophone.glide.PhonographGlideExtension;
 import com.kabouzeid.gramophone.helper.MusicPlayerRemote;
 import com.kabouzeid.gramophone.interfaces.CabHolder;
 import com.kabouzeid.gramophone.interfaces.LoaderIds;
@@ -134,7 +134,7 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
         ButterKnife.bind(this);
 
         lastFMRestClient = new LastFMRestClient(this);
-        usePalette = PreferenceUtil.getInstance(this).albumArtistColoredFooters();
+        usePalette = PreferenceUtil.getInstance().albumArtistColoredFooters();
 
         initViews();
         setUpObservableListViewParams();
@@ -197,7 +197,7 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
 
     protected void setUsePalette(boolean usePalette) {
         albumAdapter.usePalette(usePalette);
-        PreferenceUtil.getInstance(this).setAlbumArtistColoredFooters(usePalette);
+        PreferenceUtil.getInstance().setAlbumArtistColoredFooters(usePalette);
         this.usePalette = usePalette;
     }
 
@@ -250,8 +250,11 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
     }
 
     private void loadArtistImage() {
-        ArtistGlideRequest.Builder.from(Glide.with(this), artist)
-                .generatePalette(this).build()
+        GlideApp.with(this)
+                .asBitmapPalette()
+                .load(PhonographGlideExtension.getArtistModel(artist, forceDownload))
+                .transition(PhonographGlideExtension.getDefaultTransition())
+                .artistOptions(artist)
                 .dontAnimate()
                 .into(new PhonographColoredTarget(artistImage) {
                     @Override

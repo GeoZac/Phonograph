@@ -7,13 +7,15 @@ import java.util.List;
  */
 public class ArtistImage {
     public final String artistName;
+    public final boolean skipOkHttpCache;
 
     // filePath to get the image of the artist
     public final List<AlbumCover> albumCovers;
 
-    public ArtistImage(String artistName, final List<AlbumCover> albumCovers) {
+    public ArtistImage(String artistName, boolean skipOkHttpCache, final List<AlbumCover> albumCovers) {
 
         this.artistName = artistName;
+        this.skipOkHttpCache = skipOkHttpCache;
         this.albumCovers = albumCovers;
     }
 

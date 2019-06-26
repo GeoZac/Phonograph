@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class ScanMediaFolderChooserDialog extends DialogFragment implements MaterialDialog.ListCallback {
 
-    String initialPath = PreferenceUtil.getInstance(getContext()).getStartDirectory().getAbsolutePath();
+    String initialPath = PreferenceUtil.getInstance().getStartDirectory().getAbsolutePath();
     private File parentFolder;
     private File[] parentContents;
     private boolean canGoUp = false;

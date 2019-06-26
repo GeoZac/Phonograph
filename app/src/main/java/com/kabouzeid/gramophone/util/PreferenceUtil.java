@@ -12,6 +12,7 @@ import androidx.annotation.StyleRes;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.kabouzeid.gramophone.App;
 import com.kabouzeid.gramophone.R;
 import com.kabouzeid.gramophone.helper.SortOrder;
 import com.kabouzeid.gramophone.model.CategoryInfo;
@@ -93,13 +94,13 @@ public final class PreferenceUtil {
 
     private final SharedPreferences mPreferences;
 
-    private PreferenceUtil(@NonNull final Context context) {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    private PreferenceUtil() {
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getStaticContext());
     }
 
-    public static PreferenceUtil getInstance(@NonNull final Context context) {
+    public static PreferenceUtil getInstance() {
         if (sInstance == null) {
-            sInstance = new PreferenceUtil(context.getApplicationContext());
+            sInstance = new PreferenceUtil();
         }
         return sInstance;
     }
