@@ -50,13 +50,13 @@ static def getProperty(@Nullable Properties properties, String name) {
 
 android {
     archivesBaseName = "phonograph"
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.2'
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
 
-        renderscriptTargetApi 28
+        renderscriptTargetApi 29
         vectorDrawables.useSupportLibrary = true
 
         applicationId 'com.kabouzeid.gramophone'
@@ -65,7 +65,7 @@ android {
     }
     signingConfigs {
         release {
-            Properties properties = getProperties('/Users/karim/Documents/PhonographRessources/privatekeys/keystore.properties')
+            Properties properties = getProperties('/Users/karim/Documents/Phonograph/privatekeys/keystore.properties')
             storeFile file(getProperty(properties, 'storeFile'))
             keyAlias getProperty(properties, 'keyAlias')
             storePassword getProperty(properties, 'storePassword')
@@ -105,7 +105,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core:1.0.1'
+    implementation 'androidx.core:core:1.0.2'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
     implementation 'androidx.media:media:1.0.1'
@@ -117,7 +117,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
