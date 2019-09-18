@@ -254,7 +254,7 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
     private void loadArtistImage() {
         GlideApp.with(this)
                 .asBitmapPalette()
-                .load(PhonographGlideExtension.getArtistModel(artist, forceDownload))
+                .load(PhonographGlideExtension.getArtistModel(artist, true))
                 .transition(PhonographGlideExtension.getDefaultTransition())
                 .artistOptions(artist)
                 .dontAnimate()
@@ -264,7 +264,7 @@ public class ArtistDetailActivity extends AbsSlidingMusicPanelActivity implement
                         setColors(color);
                     }
                 });
-        forceDownload = false;
+        //forceDownload = false;
         artistImage.setOnClickListener(view -> showLargerImage()); //Show a larger Artist image on clicking the thumbnail
     }
 
