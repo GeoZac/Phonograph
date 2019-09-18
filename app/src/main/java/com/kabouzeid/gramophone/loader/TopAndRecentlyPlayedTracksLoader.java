@@ -95,7 +95,7 @@ public class TopAndRecentlyPlayedTracksLoader {
     @Nullable
     private static SortedLongCursor makeRecentTracksCursorImpl(@NonNull final Context context) {
         // first get the top results ids from the internal database
-        final long cutoff = PreferenceUtil.getInstance(context).getRecentlyPlayedCutoffTimeMillis();
+        final long cutoff = PreferenceUtil.getInstance().getRecentlyPlayedCutoffTimeMillis();
         Cursor songs = HistoryStore.getInstance(context).queryRecentIds(cutoff);
 
         try {

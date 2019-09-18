@@ -50,7 +50,6 @@ import com.kabouzeid.gramophone.util.ImageUtil;
 import com.kabouzeid.gramophone.util.MusicUtil;
 import com.kabouzeid.gramophone.util.Util;
 import com.kabouzeid.gramophone.util.ViewUtil;
-import com.kabouzeid.gramophone.views.WidthFitSquareLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import butterknife.BindView;

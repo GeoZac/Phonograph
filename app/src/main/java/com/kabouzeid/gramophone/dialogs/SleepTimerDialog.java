@@ -62,7 +62,7 @@ public class SleepTimerDialog extends DialogFragment {
                         return;
                     }
 
-                    PreferenceUtil.getInstance(getActivity()).setSleepTimerFinishMusic(shouldFinishLastSong.isChecked());
+                    PreferenceUtil.getInstance().setSleepTimerFinishMusic(shouldFinishLastSong.isChecked());
 
                     final int minutes = seekArcProgress;
 
@@ -107,7 +107,7 @@ public class SleepTimerDialog extends DialogFragment {
 
         ButterKnife.bind(this, materialDialog.getCustomView());
 
-        boolean finishMusic = PreferenceUtil.getInstance(getActivity()).getSleepTimerFinishMusic();
+        boolean finishMusic = PreferenceUtil.getInstance().getSleepTimerFinishMusic();
         shouldFinishLastSong.setChecked(finishMusic);
 
         seekArc.setProgressColor(ThemeSingleton.get().positiveColor.getDefaultColor());
