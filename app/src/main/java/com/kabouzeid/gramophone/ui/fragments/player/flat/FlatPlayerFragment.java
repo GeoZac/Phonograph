@@ -197,6 +197,7 @@ public class FlatPlayerFragment extends AbsPlayerFragment implements PlayerAlbum
     @Override
     public void onMediaStoreChanged() {
         updateQueue();
+        updateIsFavorite(toolbar);
     }
 
     private void updateQueue() {

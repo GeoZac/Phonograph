@@ -197,7 +197,7 @@
     <string name="author">Автор</string>
     <string name="write_an_email">Написать на электронную почту</string>
     <string name="follow_on_twitter">Следить в Twitter</string>
-    <string name="fork_on_github">Ветвление на GitHub</string>
+    <string name="fork_on_github">Перейти на GitHub</string>
     <string name="visit_website">Посетить сайт</string>
     <string name="report_bugs">Отправить отчёт об ошибке</string>
     <string name="report_bugs_summary">Сообщить об ошибках или предложить новые функции.</string>
