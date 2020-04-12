@@ -236,7 +236,7 @@ public final class PreferenceUtil {
     }
 
     public final boolean ignoreMediaStoreArtwork() {
-        return mPreferences.getBoolean(IGNORE_MEDIA_STORE_ARTWORK, false);
+        return mPreferences.getBoolean(IGNORE_MEDIA_STORE_ARTWORK, true);
     }
 
     public final String getArtistSortOrder() {
