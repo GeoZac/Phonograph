@@ -10,7 +10,6 @@
         android:id="@+id/file_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
 
@@ -18,7 +17,6 @@
         android:id="@+id/file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
@@ -27,7 +25,6 @@
         android:id="@+id/file_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
@@ -36,7 +33,6 @@
         android:id="@+id/file_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
@@ -45,7 +41,6 @@
         android:id="@+id/track_length"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
@@ -54,7 +49,6 @@
         android:id="@+id/bitrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />
@@ -63,7 +57,6 @@
         android:id="@+id/sampling_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="16sp" />

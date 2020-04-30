@@ -22,7 +22,6 @@
         body {
             background-color: #{bg-color};
             color: #{text-color};
-            font-family: sans-serif;
             overflow-wrap: break-word;
         }
         pre {

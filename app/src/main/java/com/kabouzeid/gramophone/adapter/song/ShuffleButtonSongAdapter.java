@@ -5,6 +5,8 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.view.View;
 
 import com.kabouzeid.appthemehelper.ThemeStore;
@@ -37,7 +39,11 @@ public class ShuffleButtonSongAdapter extends AbsOffsetSongAdapter {
             if (holder.title != null) {
                 holder.title.setText(activity.getResources().getString(R.string.action_shuffle_all).toUpperCase());
                 holder.title.setTextColor(accentColor);
-                holder.title.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    holder.title.setTextAppearance(R.style.TextAppearance_Medium);
+                } else {
+                    holder.title.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                }
             }
             if (holder.text != null) {
                 holder.text.setVisibility(View.GONE);

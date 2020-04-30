@@ -39,4 +39,8 @@
         <item name="android:transitionName" tools:ignore="NewApi">toolbar</item>
     </style>
 
+    <style name="TextAppearance.Medium" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
