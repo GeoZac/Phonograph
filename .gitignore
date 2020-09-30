@@ -72,6 +72,4 @@ fastlane/test_output
 # Google Play files
 fastlane/metadata/
 
-app/fabric\.properties
-
 Gemfile.lock

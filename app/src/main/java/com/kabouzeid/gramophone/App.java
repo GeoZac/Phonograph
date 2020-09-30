@@ -3,10 +3,9 @@ package com.kabouzeid.gramophone;
 import android.app.Application;
 import android.os.Build;
 
-import com.crashlytics.android.Crashlytics;
+import com.bugsnag.android.Bugsnag;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.gramophone.appshortcuts.DynamicShortcutManager;
-import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -20,7 +19,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         if(!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
+            Bugsnag.start(this);
         }
         app = this;
 
