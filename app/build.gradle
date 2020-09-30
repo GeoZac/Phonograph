@@ -100,7 +100,7 @@ android {
 }
 
 ext {
-    glideVersion = '4.8.0'
+    glideVersion = '4.11.0'
 }
 
 dependencies {
