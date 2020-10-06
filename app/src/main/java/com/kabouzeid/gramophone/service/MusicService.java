@@ -1,5 +1,6 @@
 package com.kabouzeid.gramophone.service;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -10,11 +11,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.audiofx.AudioEffect;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -26,9 +29,14 @@ import android.os.PowerManager;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Audio.AudioColumns;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import androidx.collection.LongSparseArray;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -147,6 +155,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
     private AudioManager audioManager;
     @SuppressWarnings("deprecation")
     private MediaSessionCompat mediaSession;
+    private QueueUpdateTask queueUpdateTask;
     private PowerManager.WakeLock wakeLock;
     private PlaybackHandler playerHandler;
     private final AudioManager.OnAudioFocusChangeListener audioFocusListener = new AudioManager.OnAudioFocusChangeListener() {
@@ -277,6 +286,11 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
             @Override
             public void onSeekTo(long pos) {
                 seek((int) pos);
+            }
+
+            @Override
+            public void onSkipToQueueItem(long id) {
+                setQueuePosition((int) id);
             }
 
             @Override
@@ -569,6 +583,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
         mediaSession.setPlaybackState(
                 new PlaybackStateCompat.Builder()
                         .setActions(MEDIA_SESSION_ACTIONS)
+                        .setActiveQueueItemId(getPosition())
                         .setState(isPlaying() ? PlaybackStateCompat.STATE_PLAYING : PlaybackStateCompat.STATE_PAUSED,
                                 getSongProgressMillis(), 1)
                         .build());
@@ -581,6 +596,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
             mediaSession.setMetadata(null);
             return;
         }
+
+        updateMediaSessionQueue();
 
         final MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artistName)
@@ -1402,6 +1419,99 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
                 } else {
                     stopWatch.pause();
                 }
+            }
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class QueueUpdateTask extends AsyncTask<Void, Void, List<MediaSessionCompat.QueueItem>> {
+        private List<Song> mQueue;
+
+        QueueUpdateTask() {
+            mQueue = getPlayingQueue();
+        }
+
+        @Override
+        protected List<MediaSessionCompat.QueueItem> doInBackground(Void... params) {
+            if (mQueue == null || mQueue.size() == 0) {
+                return null;
+            }
+
+            final StringBuilder selection = new StringBuilder();
+            selection.append(MediaStore.Audio.Media._ID).append(" IN (");
+            for (int i = 0; i < mQueue.size(); i++) {
+                if (i != 0) {
+                    selection.append(",");
+                }
+                selection.append(mQueue.get(i).id);
+            }
+            selection.append(")");
+
+            Cursor c = getContentResolver().query(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    new String[] { AudioColumns._ID, AudioColumns.TITLE, AudioColumns.ARTIST },
+                    selection.toString(), null, null);
+            if (c == null) {
+                return null;
+            }
+
+            try {
+                LongSparseArray<MediaDescriptionCompat> descsById = new LongSparseArray<>();
+                final int idColumnIndex = c.getColumnIndexOrThrow(AudioColumns._ID);
+                final int titleColumnIndex = c.getColumnIndexOrThrow(AudioColumns.TITLE);
+                final int artistColumnIndex = c.getColumnIndexOrThrow(AudioColumns.ARTIST);
+
+                while (c.moveToNext() && !isCancelled()) {
+                    final MediaDescriptionCompat desc = new MediaDescriptionCompat.Builder()
+                            .setTitle(c.getString(titleColumnIndex))
+                            .setSubtitle(c.getString(artistColumnIndex))
+                            .build();
+                    final long id = c.getLong(idColumnIndex);
+                    descsById.put(id, desc);
+                }
+
+                List<MediaSessionCompat.QueueItem> items = new ArrayList<>();
+                for (int i = 0; i < mQueue.size(); i++) {
+                    MediaDescriptionCompat desc = descsById.get(mQueue.get(i).id);
+                    if (desc == null) {
+                        // shouldn't happen except in corner cases like
+                        // music being deleted while we were processing
+                        desc = new MediaDescriptionCompat.Builder().build();
+                    }
+                    items.add(new MediaSessionCompat.QueueItem(desc, i));
+                }
+                return items;
+            } finally {
+                c.close();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<MediaSessionCompat.QueueItem> items) {
+            if (!isCancelled()) {
+                mediaSession.setQueue(items);
+            }
+            updateNotification();
+        }
+    }
+
+    private synchronized void updateMediaSessionQueue() {
+        if (queueUpdateTask != null) {
+            queueUpdateTask.cancel(true);
+        }
+        queueUpdateTask = new QueueUpdateTask();
+        queueUpdateTask.execute();
+    }
+
+    public void setQueuePosition(final int index) {
+        synchronized (this) {
+            pause();
+            position = index;
+            openCurrent();
+            play();
+            notifyChange(META_CHANGED);
+            if( shuffleMode == SHUFFLE_MODE_SHUFFLE) {
+                setShuffleMode(MusicService.SHUFFLE_MODE_SHUFFLE);
             }
         }
     }
